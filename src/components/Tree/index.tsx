@@ -1,15 +1,19 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
+import { TreeContext } from 'contexts/TreeContext';
 import { Node, TreeProps } from 'types/index';
 
 import TreeNode from 'components/TreeNode';
 
 const Tree = ({ data }: TreeProps) => {
-  const [selectedNodeId, setSelectedNodeId] = useState<string>('');
+  const { selectedNodeId, setSelectedNodeId } = useContext(TreeContext);
 
-  const handleSelect = useCallback((node: Node) => {
-    setSelectedNodeId(node.id);
-  }, []);
+  const handleSelect = useCallback(
+    (node: Node) => {
+      setSelectedNodeId(node.id);
+    },
+    [setSelectedNodeId],
+  );
 
   return (
     <div>
