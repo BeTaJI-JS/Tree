@@ -1,0 +1,54 @@
+@use "styles/colors" as *;
+
+.treeNodeContainer {
+  cursor: pointer;
+  position: relative;
+}
+
+.treeChildNodeContainer {
+  padding-left: 20px;
+  position: relative;
+}
+
+.treeNode {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 10px;
+}
+
+// TODO Стили для линий
+.treeChildNodeContainer::before {
+  content: "";
+  position: absolute;
+  width: 10px; // ширина линии
+  height: calc(100% - 8px); //!  Высота линии (от верхней границы до нижней) - вся высота - паддинг
+  border-left: 1px solid #ccc;
+}
+
+//TODO нужно додумать логику полосок вправо( что бы не было у родителей)
+// .treeNodeContainer::after {
+//   content: "";
+//   position: absolute;
+//   top: calc(100% - 10px);
+//   width: 10px;
+//   height: 10px
+//   border-top: 1px solid #ccc;
+// }
+
+.treeChildNodeContainer:first-child::before {
+  display: none; //! Убираю линию для первого дочернего элемента
+}
+
+.treeChildNodeContainer:last-child::after {
+  display: none; //! Убираю горизонтальную линию для последнего дочернего элемента
+}
+
+.nodeTitle {
+  padding: 6px 8px;
+}
+
+.activeNode {
+  border: 1px solid $blue;
+  background-color: $darkBlue;
+}

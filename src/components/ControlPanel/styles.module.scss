@@ -1,0 +1,11 @@
+@use "styles/colors" as *;
+
+.controlPanel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid $gray;
+  border-bottom: none;
+  padding: 10px 16px;
+}

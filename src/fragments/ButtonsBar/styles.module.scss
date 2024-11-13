@@ -1,0 +1,10 @@
+.buttonsBar {
+  display: flex;
+  gap: 30px;
+
+  & img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
