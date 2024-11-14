@@ -15,6 +15,11 @@
   align-items: center;
   position: relative;
   padding-left: 10px;
+
+  & > input {
+    position: relative;
+    left: 20px;
+  }
 }
 
 // TODO Стили для линий

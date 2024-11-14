@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 
 import { TreeContext } from 'contexts/TreeContext';
-import { data } from 'data/index';
 
 import Tree from 'components/Tree';
 

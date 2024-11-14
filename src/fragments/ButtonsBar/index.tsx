@@ -7,77 +7,47 @@ import styles from './styles.module.scss';
 
 import { TreeContext } from 'contexts/TreeContext';
 
-import { useContext, useRef, useState } from 'react';
+import { useContext } from 'react';
 
-import { setUniqId } from 'utils/index';
+import cn from 'classnames';
 
 const ButtonsBar = () => {
-  const { treeData, setTreeData, selectedNodeId } = useContext(TreeContext);
-  const [editingNodeId, setEditingNodeId] = useState(null); // Для отслеживания редактируемого узла
-  // const inputRef = useRef(null);
-  // console.log('inputRef', inputRef);
+  const { setNewItemType, selectedNode, deleteNodeItem, setIsEditNode } = useContext(TreeContext);
+  const isDisabledBtn = selectedNode?.type === 'file';
 
-  const addFolder = () => {
-    const newFolder = {
-      id: setUniqId(),
-      name: 'Новая папка',
-      type: 'folder',
-      children: [],
-    };
-
-    const newTreeData = treeData.map((node) => addFolderToNode(node, selectedNodeId, newFolder));
-    setTreeData(newTreeData);
-
-    setEditingNodeId(newFolder.id);
-    // if (inputRef.current) {
-    // inputRef.current = newFolder;
+  const handleAddFolder = () => {
+    if (isDisabledBtn) {
+      return;
+    }
+    setNewItemType('folder'); // Устанавливаем тип нового элемента как 'folder'
   };
 
-  const addFolderToNode = (node, selectedId, newFolder) => {
-    if (node.id === selectedId) {
-      return {
-        ...node,
-        children: [...(node.children || []), newFolder],
-      };
+  const handleAddFile = () => {
+    if (isDisabledBtn) {
+      return;
     }
-    if (node.children) {
-      return {
-        ...node,
-        children: node.children.map((child) => addFolderToNode(child, selectedId, newFolder)),
-      };
-    }
-    return node;
+    setNewItemType('file'); // Устанавливаем тип нового элемента как 'file'
   };
 
-  // const handleNameChange = (e) => {
-  //   const newName = e.target.value;
-  //   const newTreeData = treeData.map((node) => editNodeById(node, editingNodeId, newName));
-  //   setTreeData(newTreeData);
-  // };
+  const handleDeleteNode = () => {
+    if (selectedNode) {
+      deleteNodeItem();
+    }
+  };
 
-  // const editNodeById = (node, selectedId, newName) => {
-  //   if (node.id === selectedId) {
-  //     return {
-  //       ...node,
-  //       name: newName,
-  //     };
-  //   }
-  //   if (node.children) {
-  //     return {
-  //       ...node,
-  //       children: node.children.map((child) => editNodeById(child, selectedId, newName)),
-  //     };
-  //   }
-  //   return node;
-  // };
+  const handleEditNode = () => {
+    if (!selectedNode) {
+      return;
+    }
+    setIsEditNode((prev) => !prev);
+  };
 
   return (
     <div className={styles.buttonsBar}>
-      {/* <input ref={inputRef} type='text' placeholder='Введите имя папки' onChange={handleNameChange} /> */}
-      <img src={Folder} alt='folder' onClick={addFolder} />
-      <img src={File} alt='file' />
-      <img src={Edit} alt='edit' />
-      <img src={Delete} alt='delete' />
+      <img src={Folder} alt='folder' onClick={handleAddFolder} className={cn({ [styles.disableBtn]: isDisabledBtn })} />
+      <img src={File} alt='file' onClick={handleAddFile} className={cn({ [styles.disableBtn]: isDisabledBtn })} />
+      <img src={Edit} alt='edit' onClick={handleEditNode} />
+      <img src={Delete} alt='delete' onClick={handleDeleteNode} />
     </div>
   );
 };

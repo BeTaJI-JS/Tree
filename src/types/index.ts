@@ -18,3 +18,11 @@ export type TreeNodeProps = {
   onSelect: (node: Node) => void;
   selectedNodeId?: string;
 };
+
+export type CustomTreeNodeProps = {
+  node: Node;
+  onSelect: (node: Node) => void;
+  selectedNodeId?: string;
+  isOpen: boolean;
+  toggleOpen: (e: React.MouseEvent) => void;
+};
