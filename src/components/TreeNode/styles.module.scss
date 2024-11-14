@@ -16,6 +16,11 @@
   position: relative;
   padding-left: 10px;
 
+  & > span {
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
   & > input {
     position: relative;
     left: 20px;

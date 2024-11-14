@@ -39,6 +39,8 @@ const deleteNodeById = (treeData, nodeId) => {
 };
 
 const editNodeById = (treeData, nodeId, newName) => {
+  console.log('nodeId', nodeId);
+
   for (let i = 0; i < treeData.length; i++) {
     const node = treeData[i];
     if (node.id === nodeId) {
@@ -47,6 +49,8 @@ const editNodeById = (treeData, nodeId, newName) => {
     }
     if (node.children) {
       const res = editNodeById(node.children, nodeId, newName);
+      console.log('res', res);
+
       if (res) {
         return res;
       }
@@ -98,6 +102,7 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
         editNodeItem,
         isEditNode,
         setIsEditNode,
+        editNodeById,
       }}
     >
       {children}

@@ -36,6 +36,8 @@ const ButtonsBar = () => {
   };
 
   const handleEditNode = () => {
+    console.log('Клик редактирования');
+
     if (!selectedNode) {
       return;
     }

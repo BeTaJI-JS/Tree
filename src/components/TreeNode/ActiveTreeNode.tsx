@@ -10,8 +10,18 @@ import styles from './styles.module.scss';
 import TreeNode from '.';
 
 const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodeProps) => {
-  const { treeData, setTreeData, selectedNodeId, newItemType, setNewItemType } = useContext(TreeContext);
+  const {
+    treeData,
+    setTreeData,
+    selectedNodeId,
+    newItemType,
+    setNewItemType,
+    isEditNode,
+    editNodeById,
+    setIsEditNode,
+  } = useContext(TreeContext);
   const [newName, setNewName] = useState('');
+  console.log('isEditNode', isEditNode);
 
   const handleAddNewItem = () => {
     if (newName.trim()) {
@@ -44,6 +54,11 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
       }
       return node;
     });
+  };
+
+  const handleEditNode = () => {
+    editNodeById(treeData, selectedNodeId, newName);
+    setIsEditNode(false);
   };
 
   useEffect(() => {
@@ -95,6 +110,17 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
           autoFocus
         />
       )}
+      {isEditNode && (
+        <input
+          type='text'
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+          onBlur={handleEditNode}
+          onKeyDown={(e) => e.key === 'Enter' && handleEditNode()}
+          autoFocus
+        />
+      )}
+
       {isOpen && node.children && (
         <div className={styles.treeChildNodeContainer}>
           {node.children
