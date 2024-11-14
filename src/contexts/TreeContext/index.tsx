@@ -1,64 +1,9 @@
 import React, { useMemo, useState } from 'react';
 
 import { data } from 'data/index';
+import { deleteNodeById, editNodeById, getNodeById } from 'utils/NodeHelpers';
 
 const TreeContext = React.createContext({});
-
-const getNodeById = (treeData, nodeId) => {
-  for (const node of treeData) {
-    if (node.id === nodeId) {
-      return node;
-    }
-    if (node.children) {
-      const res = getNodeById(node.children, nodeId);
-      if (res) {
-        return res;
-      }
-    }
-  }
-
-  return null;
-};
-
-const deleteNodeById = (treeData, nodeId) => {
-  for (let i = 0; i < treeData.length; i++) {
-    const node = treeData[i];
-    if (node.id === nodeId) {
-      treeData.splice(i, 1);
-      return null;
-    }
-    if (node.children) {
-      const res = deleteNodeById(node.children, nodeId);
-      if (res) {
-        return res;
-      }
-    }
-  }
-
-  return null;
-};
-
-const editNodeById = (treeData, nodeId, newName) => {
-  console.log('nodeId', nodeId);
-
-  for (let i = 0; i < treeData.length; i++) {
-    const node = treeData[i];
-    if (node.id === nodeId) {
-      node.name = newName;
-      return null;
-    }
-    if (node.children) {
-      const res = editNodeById(node.children, nodeId, newName);
-      console.log('res', res);
-
-      if (res) {
-        return res;
-      }
-    }
-  }
-
-  return null;
-};
 
 // типизация children - ReactNode, потому что children - это
 // реакт-элемент, который может быть как одиночным, так и массивом
@@ -102,7 +47,6 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
         editNodeItem,
         isEditNode,
         setIsEditNode,
-        editNodeById,
       }}
     >
       {children}

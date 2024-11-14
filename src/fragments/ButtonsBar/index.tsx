@@ -41,7 +41,7 @@ const ButtonsBar = () => {
     if (!selectedNode) {
       return;
     }
-    setIsEditNode((prev) => !prev);
+    setIsEditNode((prev: boolean) => !prev);
   };
 
   return (

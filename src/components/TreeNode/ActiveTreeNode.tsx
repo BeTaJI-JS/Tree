@@ -4,22 +4,15 @@ import cn from 'classnames';
 import { TreeContext } from 'contexts/TreeContext';
 import { CustomTreeNodeProps } from 'types/index';
 import { setUniqId } from 'utils/index';
+import { editNodeById } from 'utils/NodeHelpers';
 
 import styles from './styles.module.scss';
 
 import TreeNode from '.';
 
 const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodeProps) => {
-  const {
-    treeData,
-    setTreeData,
-    selectedNodeId,
-    newItemType,
-    setNewItemType,
-    isEditNode,
-    editNodeById,
-    setIsEditNode,
-  } = useContext(TreeContext);
+  const { treeData, setTreeData, selectedNodeId, newItemType, setNewItemType, isEditNode, setIsEditNode } =
+    useContext(TreeContext);
   const [newName, setNewName] = useState('');
   console.log('isEditNode', isEditNode);
 
