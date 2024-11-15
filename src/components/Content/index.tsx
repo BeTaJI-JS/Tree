@@ -8,6 +8,7 @@ import Tree from 'components/Tree';
 import styles from './styles.module.scss';
 const Content = () => {
   const { treeData } = useContext(TreeContext) as TreeContextType;
+
   return (
     <div className={styles.contentContainer}>
       <div className={styles.contentContainerLeft}>

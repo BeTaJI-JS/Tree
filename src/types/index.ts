@@ -36,7 +36,7 @@ export type TreeContextType = {
   setNewItemType: (type: string) => void;
   selectedNode: Node | undefined;
   deleteNodeItem: () => void;
-  editNodeItem: (id: string, newName: string) => void;
+  editNodeItem: (newName: string) => void;
   isEditNode: boolean;
   setIsEditNode: (value: boolean | ((prevIsEditNode: boolean) => boolean)) => void;
 };

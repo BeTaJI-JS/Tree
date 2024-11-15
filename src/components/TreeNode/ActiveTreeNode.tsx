@@ -5,14 +5,13 @@ import { TreeContext } from 'contexts/TreeContext';
 import InputNode from 'fragments/InputNode';
 import { CustomTreeNodeProps, Node, TreeContextType } from 'types/index';
 import { setUniqId } from 'utils/index';
-import { editNodeById } from 'utils/NodeHelpers';
 
 import styles from './styles.module.scss';
 
 import TreeNode from '.';
 
 const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodeProps) => {
-  const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, setIsEditNode, selectedNode } = useContext(
+  const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, selectedNode, editNodeItem } = useContext(
     TreeContext,
   ) as TreeContextType;
 
@@ -56,8 +55,7 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
 
   const handleEditNode = () => {
     if (selectedNode?.id) {
-      editNodeById(treeData, selectedNode?.id, newName);
-      setIsEditNode(false);
+      editNodeItem(newName);
     }
   };
 

@@ -1,7 +1,7 @@
 import { Node } from 'types/index';
 import { setUniqId } from 'utils/index';
 
-export const data: Array<Node> = [
+export const data: Node[] = [
   {
     id: setUniqId(),
     name: 'КорневаяПапка1',
