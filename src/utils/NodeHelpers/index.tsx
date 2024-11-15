@@ -35,8 +35,6 @@ export const deleteNodeById = (treeData: Node[], nodeId: string): Node | null =>
 };
 
 export const editNodeById = (treeData: Node[], nodeId: string, newName: string): Node | null => {
-  console.log('nodeId', nodeId);
-
   for (let i = 0; i < treeData.length; i++) {
     const node = treeData[i];
     if (node.id === nodeId) {
@@ -45,7 +43,6 @@ export const editNodeById = (treeData: Node[], nodeId: string, newName: string):
     }
     if (node.children) {
       const res = editNodeById(node.children, nodeId, newName);
-      console.log('res', res);
 
       if (res) {
         return res;

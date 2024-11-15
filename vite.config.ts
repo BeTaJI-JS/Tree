@@ -8,10 +8,16 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react()],
   css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+      },
+    },
     postcss: {
       plugins: [autoprefixer],
     },
   },
+
   resolve: {
     alias: {
       assets: resolve(__dirname, './src/assets/'),

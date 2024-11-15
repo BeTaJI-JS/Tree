@@ -16,7 +16,6 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
   ) as TreeContextType;
 
   const [newName, setNewName] = useState('');
-  console.log('isEditNode', isEditNode);
 
   const handleAddNewItem = () => {
     if (newName.trim()) {

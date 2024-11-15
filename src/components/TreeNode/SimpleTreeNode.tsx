@@ -5,8 +5,6 @@ import styles from './styles.module.scss';
 import TreeNode from '.';
 
 const SimpleTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodeProps) => {
-  console.log('глупый компонент');
-
   return (
     <>
       <div onClick={toggleOpen} className={styles.treeNodeContainer}>
