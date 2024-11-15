@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { data } from 'data/index';
+import { TreeContextType } from 'types/index';
 import { deleteNodeById, editNodeById, getNodeById } from 'utils/NodeHelpers';
 
-const TreeContext = React.createContext({});
+const TreeContext = React.createContext<TreeContextType | null>(null);
 
 // типизация children - ReactNode, потому что children - это
 // реакт-элемент, который может быть как одиночным, так и массивом
@@ -13,31 +14,36 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
   const [newItemType, setNewItemType] = useState<string | null>(null);
   const [isEditNode, setIsEditNode] = useState<boolean>(false);
 
-  const setNewItem = (type: string) => {
-    setNewItemType(type);
-  };
+  const setNewItem = useCallback(
+    (type: string) => {
+      setNewItemType(type);
+    },
+    [setNewItemType],
+  );
 
   const selectedNode = useMemo(() => {
     return getNodeById(treeData, selectedNodeId);
   }, [treeData, selectedNodeId]);
 
-  const deleteNodeItem = () => {
+  const deleteNodeItem = useCallback(() => {
     deleteNodeById(treeData, selectedNodeId);
     setTreeData([...treeData]);
-  };
+  }, [selectedNodeId, treeData]);
 
-  const editNodeItem = (newName: string) => {
-    editNodeById(treeData, selectedNodeId, newName);
-    setTreeData([...treeData]);
-    setIsEditNode(false);
-  };
+  const editNodeItem = useCallback(
+    (newName: string) => {
+      editNodeById(treeData, selectedNodeId, newName);
+      setTreeData([...treeData]);
+      setIsEditNode(false);
+    },
+    [selectedNodeId, treeData],
+  );
 
   return (
     <TreeContext.Provider
       value={{
         treeData,
         setTreeData,
-        selectedNodeId,
         setSelectedNodeId,
         setNewItem,
         newItemType,
@@ -55,29 +61,3 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export { TreeProvider, TreeContext };
-
-// import React, { createContext, useState, useContext } from 'react';
-
-// export const TreeProvider = ({ children }) => {
-//   const [treeData, setTreeData] = useState<any[]>([]);
-//   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
-//   const [newItemType, setNewItemType] = useState<string | null>(null);
-
-//   const setNewItem = (type: string) => {
-//     setNewItemType(type);
-//   };
-
-//   return (
-//     <TreeContext.Provider value={{ treeData, setTreeData, selectedNodeId, setNewItem, newItemType }}>
-//       {children}
-//     </TreeContext.Provider>
-//   );
-// };
-
-// export const useTreeContext = () => {
-//   const context = useContext(TreeContext);
-//   if (!context) {
-//     throw new Error('useTreeContext must be used within a TreeProvider');
-//   }
-//   return context;
-// };

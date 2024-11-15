@@ -1,18 +1,19 @@
+import cn from 'classnames';
+
 import Folder from '/folder.svg';
 import File from '/file.svg';
 import Edit from '/edit.svg';
 import Delete from '/delete.svg';
 
-import styles from './styles.module.scss';
-
 import { TreeContext } from 'contexts/TreeContext';
+import { TreeContextType } from 'types/index';
 
 import { useContext } from 'react';
 
-import cn from 'classnames';
+import styles from './styles.module.scss';
 
 const ButtonsBar = () => {
-  const { setNewItemType, selectedNode, deleteNodeItem, setIsEditNode } = useContext(TreeContext);
+  const { setNewItemType, selectedNode, deleteNodeItem, setIsEditNode } = useContext(TreeContext) as TreeContextType;
   const isDisabledBtn = selectedNode?.type === 'file';
 
   const handleAddFolder = () => {
@@ -36,12 +37,10 @@ const ButtonsBar = () => {
   };
 
   const handleEditNode = () => {
-    console.log('Клик редактирования');
-
     if (!selectedNode) {
       return;
     }
-    setIsEditNode((prev: boolean) => !prev);
+    setIsEditNode((prev) => !prev);
   };
 
   return (
@@ -55,27 +54,3 @@ const ButtonsBar = () => {
 };
 
 export default ButtonsBar;
-
-// export default ButtonsBar;
-
-//! изначальный вариант без логики ( не удалять на случай отката и теста)
-// import { useContext, useState } from 'react';
-
-// import { TreeContext } from 'contexts/TreeContext';
-
-// import styles from './styles.module.scss';
-
-// const ButtonsBar = () => {
-//   const { treeData, setTreeData } = useContext(TreeContext);
-
-//   return (
-//     <div className={styles.buttonsBar}>
-//       <img src={Folder} alt='folder' />
-//       <img src={File} alt='file' />
-//       <img src={Edit} alt='edit' />
-//       <img src={Delete} alt='delete' />
-//     </div>
-//   );
-// };
-
-// export default ButtonsBar;

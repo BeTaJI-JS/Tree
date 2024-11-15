@@ -26,3 +26,17 @@ export type CustomTreeNodeProps = {
   isOpen: boolean;
   toggleOpen: (e: React.MouseEvent) => void;
 };
+
+export type TreeContextType = {
+  treeData: Node[];
+  setTreeData: (data: Node[]) => void;
+  setSelectedNodeId: (id: string) => void;
+  setNewItem: (type: string) => void;
+  newItemType: string | null;
+  setNewItemType: (type: string) => void;
+  selectedNode: Node | undefined;
+  deleteNodeItem: () => void;
+  editNodeItem: (id: string, newName: string) => void;
+  isEditNode: boolean;
+  setIsEditNode: (value: boolean | ((prevIsEditNode: boolean) => boolean)) => void;
+};
