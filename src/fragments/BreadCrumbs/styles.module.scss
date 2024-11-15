@@ -1,4 +1,8 @@
 @use "styles/colors" as *;
 .breadCrumbs {
   color: $gray;
+
+  & span {
+    cursor: pointer;
+  }
 }

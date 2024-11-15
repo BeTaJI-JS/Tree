@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { Node } from 'types/index';
+import { TreeContext } from 'contexts/TreeContext';
+import { Node, TreeContextType } from 'types/index';
 
 import styles from './styles.module.scss';
 
@@ -10,42 +11,68 @@ type BreadCrumbsProps = {
 };
 
 const initialValuePath: string[] = ['Корень'];
+const initialValueIdPath: string[] = ['Rootindex'];
 
 const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
+  const { setSelectedNodeId } = useContext(TreeContext) as TreeContextType;
   const [path, setPath] = useState<string[]>(initialValuePath);
-  console.log('currentId', currentId);
+  const [ids, setIds] = useState<string[]>(initialValueIdPath); // Массив для хранения идентификаторов узлов
 
-  const findPath = useCallback((nodes: Node[], id: string, currentPath: string[] = initialValuePath): boolean => {
-    for (const node of nodes) {
-      const newPath = [...currentPath, node.name];
+  const findPath = useCallback(
+    (
+      nodes: Node[],
+      id: string,
+      currentPath: string[] = initialValuePath,
+      currentIds: string[] = initialValueIdPath,
+    ): boolean => {
+      for (const node of nodes) {
+        const newPath = [...currentPath, node.name];
+        const newIds = [...currentIds, node.id];
 
-      // TODO является ли текущий узел тем, что мы ищем
-      if (node.id === id) {
-        setPath(newPath);
-        return true;
+        if (node.id === id) {
+          setPath(newPath);
+          setIds(newIds);
+          return true;
+        }
+
+        if (node.children) {
+          const found = findPath(node.children, id, newPath, newIds);
+          if (found) return true;
+        }
       }
+      return false;
+    },
+    [],
+  );
 
-      // TODO  Если у узла есть дочерние элементы, продолжаем поиск в них
-      if (node.children) {
-        const found = findPath(node.children, id, newPath);
-        if (found) return true;
-      }
-    }
-    return false;
-  }, []);
-
-  //  отображение пути
+  //TODO рисую пути
   const renderPath = useMemo(() => {
-    if (path.length === 1) {
-      return `${path[0]} / `;
-    }
+    return path.map((name, index) => {
+      const id = ids[index]; // формирую айдишки элементов
 
-    if (path.length > 5) {
-      return `${path[0]} / ... / ... / ${path[path.length - 1]}`;
-    }
+      if (path.length > 6) {
+        if (index === 0 || index === path.length - 1 || index === path.length - 2) {
+          return (
+            <span key={id} className={styles.breadcrumb} onClick={() => setSelectedNodeId(id)}>
+              {name}
+              {index < path.length - 1 && ' / '}
+            </span>
+          );
+        } else if (index === 1) {
+          return <span key={id}>... / ... / </span>;
+        }
+        // все остальные узлы не рисую
+        return null;
+      }
 
-    return path.join(' / ');
-  }, [path]);
+      return (
+        <span key={id} className={styles.breadcrumb} onClick={() => setSelectedNodeId(id)}>
+          {name}
+          {index < path.length - 1 && ' / '}
+        </span>
+      );
+    });
+  }, [path, ids, setSelectedNodeId]);
 
   useEffect(() => {
     if (currentId) {
