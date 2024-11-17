@@ -5,3 +5,13 @@ body {
   color: $white;
   font-family: "Inter";
 }
+
+::-webkit-scrollbar {
+  width: 3px;
+  background: $gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $blue;
+  border-radius: 10px;
+}

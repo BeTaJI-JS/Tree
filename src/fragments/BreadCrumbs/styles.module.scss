@@ -1,6 +1,7 @@
 @use "styles/colors" as *;
 .breadCrumbs {
   color: $gray;
+  word-wrap: break-word;
 
   & span {
     cursor: pointer;
