@@ -6,18 +6,16 @@ type InputNode = {
   handleNode: () => void;
 };
 
-const InputNode = ({ valueInput, onChange, handleNode }: InputNode) => {
-  return (
-    <input
-      type='text'
-      value={valueInput}
-      onChange={onChange}
-      onBlur={handleNode}
-      onKeyDown={(e) => e.key === 'Enter' && handleNode()}
-      autoFocus
-      className={styles.inputNode}
-    />
-  );
-};
+const InputNode = ({ valueInput, onChange, handleNode }: InputNode) => (
+  <input
+    type='text'
+    value={valueInput}
+    onChange={onChange}
+    onBlur={handleNode}
+    onKeyDown={(e) => e.key === 'Enter' && handleNode()}
+    autoFocus
+    className={styles.inputNode}
+  />
+);
 
 export default InputNode;

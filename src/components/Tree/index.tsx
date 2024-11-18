@@ -16,11 +16,11 @@ const Tree = ({ data }: TreeProps) => {
   );
 
   return (
-    <div>
+    <>
       {data.map((node) => (
         <TreeNode key={node.id} node={node} onSelect={handleSelect} selectedNodeId={selectedNode?.id} />
       ))}
-    </div>
+    </>
   );
 };
 

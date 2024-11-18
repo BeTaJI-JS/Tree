@@ -11,11 +11,11 @@ import styles from './styles.module.scss';
 import TreeNode from '.';
 
 const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodeProps) => {
+  const [newName, setNewName] = useState('');
+
   const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, selectedNode, editNodeItem } = useContext(
     TreeContext,
   ) as TreeContextType;
-
-  const [newName, setNewName] = useState('');
 
   const handleAddNewItem = () => {
     if (newName.trim()) {

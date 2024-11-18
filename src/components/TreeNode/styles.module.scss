@@ -22,13 +22,12 @@
   }
 }
 
-// TODO Стили для линий
 .treeChildNodeContainer::before {
   content: "";
   position: absolute;
   width: 10px;
   height: calc(100% - 8px);
-  border-left: 1px solid #ccc;
+  border-left: 1px solid $gray2;
 }
 
 .treeChildNodeContainer:first-child::before {

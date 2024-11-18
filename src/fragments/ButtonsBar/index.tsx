@@ -14,20 +14,21 @@ import styles from './styles.module.scss';
 
 const ButtonsBar = () => {
   const { setNewItemType, selectedNode, deleteNodeItem, setIsEditNode } = useContext(TreeContext) as TreeContextType;
+
   const isDisabledBtn = selectedNode?.type === 'file';
 
   const handleAddFolder = () => {
     if (isDisabledBtn) {
       return;
     }
-    setNewItemType('folder'); // Устанавливаем тип нового элемента как 'folder'
+    setNewItemType('folder');
   };
 
   const handleAddFile = () => {
     if (isDisabledBtn) {
       return;
     }
-    setNewItemType('file'); // Устанавливаем тип нового элемента как 'file'
+    setNewItemType('file');
   };
 
   const handleDeleteNode = () => {

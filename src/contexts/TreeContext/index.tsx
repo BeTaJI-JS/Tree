@@ -7,8 +7,6 @@ import { deleteNodeById, editNodeById, getNodeById } from 'utils/NodeHelpers';
 
 const TreeContext = React.createContext<TreeContextType | null>(null);
 
-// типизация children - ReactNode, потому что children - это
-// реакт-элемент, который может быть как одиночным, так и массивом
 const TreeProvider = ({ children }: { children: React.ReactNode }) => {
   const [treeData, setTreeData] = useState(loadData() || data); //!  удалить стейт со времененм и использовать только сторадж( на последок оставить)
   const [selectedNodeId, setSelectedNodeId] = useState<string>('');
@@ -44,7 +42,7 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
     [selectedNodeId, treeData],
   );
 
-  //! useEffect для проброса моков как initialValues  в localStorage
+  // TODO useEffect для проброса моков как initialValues  в localStorage
   useEffect(() => {
     if (!treeData.length) {
       saveData(data);

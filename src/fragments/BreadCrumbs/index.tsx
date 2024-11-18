@@ -16,7 +16,7 @@ const initialValueIdPath: string[] = ['Rootindex'];
 const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
   const { setSelectedNodeId } = useContext(TreeContext) as TreeContextType;
   const [path, setPath] = useState<string[]>(initialValuePath);
-  const [ids, setIds] = useState<string[]>(initialValueIdPath); // Массив для хранения идентификаторов узлов
+  const [ids, setIds] = useState<string[]>(initialValueIdPath);
 
   const findPath = useCallback(
     (
@@ -45,10 +45,9 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
     [],
   );
 
-  //TODO рисую пути
   const renderPath = useMemo(() => {
     return path.map((name, index) => {
-      const id = ids[index]; // формирую айдишки элементов
+      const id = ids[index];
 
       if (path.length > 5) {
         if (index === 0 || index === path.length - 1 || index === path.length - 2) {
@@ -61,7 +60,7 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
         } else if (index === 1) {
           return <span key={id}>... / ... / </span>;
         }
-        // все остальные узлы не рисую
+
         return null;
       }
 
