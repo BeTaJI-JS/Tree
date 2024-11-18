@@ -1,4 +1,8 @@
+@use "styles/colors" as *;
+
 .inputNode {
   position: relative;
   left: 20px;
+  background: $black;
+  color: $white;
 }
