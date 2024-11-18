@@ -48,14 +48,16 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!treeData.length) {
       saveData(data);
+      return;
     }
     saveData([...treeData]);
   }, [treeData]);
 
   useEffect(() => {
     const storedData = loadData();
-
-    setTreeData(storedData);
+    if (storedData.length > 0) {
+      setTreeData(storedData);
+    }
   }, []);
 
   return (
