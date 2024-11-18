@@ -26,27 +26,17 @@
 .treeChildNodeContainer::before {
   content: "";
   position: absolute;
-  width: 10px; // ширина линии
-  height: calc(100% - 8px); //!  Высота линии (от верхней границы до нижней) - вся высота - паддинг
+  width: 10px;
+  height: calc(100% - 8px);
   border-left: 1px solid #ccc;
 }
 
-//TODO нужно додумать логику полосок вправо( что бы не было у родителей)
-// .treeNodeContainer::after {
-//   content: "";
-//   position: absolute;
-//   top: calc(100% - 10px);
-//   width: 10px;
-//   height: 10px
-//   border-top: 1px solid #ccc;
-// }
-
 .treeChildNodeContainer:first-child::before {
-  display: none; //! Убираю линию для первого дочернего элемента
+  display: none;
 }
 
 .treeChildNodeContainer:last-child::after {
-  display: none; //! Убираю горизонтальную линию для последнего дочернего элемента
+  display: none;
 }
 
 .nodeTitle {

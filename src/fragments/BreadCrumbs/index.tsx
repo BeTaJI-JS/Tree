@@ -50,7 +50,7 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
     return path.map((name, index) => {
       const id = ids[index]; // формирую айдишки элементов
 
-      if (path.length > 6) {
+      if (path.length > 5) {
         if (index === 0 || index === path.length - 1 || index === path.length - 2) {
           return (
             <span key={id} className={styles.breadcrumb} onClick={() => setSelectedNodeId(id)}>
