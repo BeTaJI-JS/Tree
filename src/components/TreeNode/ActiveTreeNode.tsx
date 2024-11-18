@@ -3,8 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import cn from 'classnames';
 import { TreeContext } from 'contexts/TreeContext';
 import InputNode from 'fragments/InputNode';
-import { CustomTreeNodeProps, Node, TreeContextType } from 'types/index';
+
 import { setUniqId } from 'utils/index';
+
+import { CustomTreeNodeProps, Node, TreeContextType } from 'types/index';
 
 import styles from './styles.module.scss';
 

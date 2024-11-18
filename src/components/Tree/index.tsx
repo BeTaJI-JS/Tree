@@ -1,9 +1,10 @@
 import { useCallback, useContext } from 'react';
 
 import { TreeContext } from 'contexts/TreeContext';
-import { Node, TreeProps } from 'types/index';
 
 import TreeNode from 'components/TreeNode';
+
+import { Node, TreeProps } from 'types/index';
 
 const Tree = ({ data }: TreeProps) => {
   const { setSelectedNodeId, selectedNode } = useContext(TreeContext)!;

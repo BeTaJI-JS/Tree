@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { data } from 'data/index';
-import { TreeContextType } from 'types/index';
+
 import { loadData, saveData } from 'utils/LocalStorageHelpers';
 import { deleteNodeById, editNodeById, getNodeById } from 'utils/NodeHelpers';
+
+import { TreeContextType } from 'types/index';
 
 const TreeContext = React.createContext<TreeContextType | null>(null);
 

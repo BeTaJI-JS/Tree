@@ -55,21 +55,6 @@ export default tseslint.config(
             },
             {
               group: 'internal',
-              pattern: 'consts/**',
-              position: 'after',
-            },
-            {
-              group: 'internal',
-              pattern: 'routers',
-              position: 'after',
-            },
-            {
-              group: 'internal',
-              pattern: 'routers/**',
-              position: 'after',
-            },
-            {
-              group: 'internal',
               pattern: 'pages/**',
               position: 'after',
             },
@@ -85,22 +70,17 @@ export default tseslint.config(
             },
             {
               group: 'internal',
-              pattern: 'store',
+              pattern: 'utils/**',
               position: 'after',
             },
             {
               group: 'internal',
-              pattern: 'store/**',
+              pattern: 'types/**',
               position: 'after',
             },
             {
               group: 'internal',
               pattern: 'helpers/**',
-              position: 'after',
-            },
-            {
-              group: 'internal',
-              pattern: 'hooks/**',
               position: 'after',
             },
             {

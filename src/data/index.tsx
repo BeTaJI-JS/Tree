@@ -1,5 +1,6 @@
-import { Node } from 'types/index';
 import { setUniqId } from 'utils/index';
+
+import { Node } from 'types/index';
 
 export const data: Node[] = [
   {

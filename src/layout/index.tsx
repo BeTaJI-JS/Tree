@@ -1,6 +1,6 @@
-import { LayoutProps } from 'types/index';
-
 import ControlPanel from 'components/ControlPanel';
+
+import { LayoutProps } from 'types/index';
 
 import styles from './styles.module.scss';
 const Layout = ({ children }: LayoutProps) => {

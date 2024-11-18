@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 
 import { TreeContext } from 'contexts/TreeContext';
+
 import { TreeNodeProps, TreeContextType } from 'types/index';
 
 import ActiveTreeNode from './ActiveTreeNode';
