@@ -19,10 +19,6 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const selectedNodeId = searchParams.get('id');
 
-  const selectedNode = useMemo(() => {
-    return selectedNodeId ? getNodeById(treeData, selectedNodeId) : null;
-  }, [treeData, selectedNodeId]);
-
   const deleteNodeItem = useCallback(() => {
     if (selectedNodeId) {
       deleteNodeById(treeData, selectedNodeId);
@@ -42,6 +38,35 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
     [selectedNodeId, treeData],
   );
 
+  const selectedNode = useMemo(() => {
+    return selectedNodeId ? getNodeById(treeData, selectedNodeId) : null;
+  }, [treeData, selectedNodeId]);
+
+  const contextValues = useMemo(
+    () => ({
+      treeData,
+      setTreeData,
+      newItemType,
+      setNewItemType,
+      selectedNode,
+      deleteNodeItem,
+      editNodeItem,
+      isEditNode,
+      setIsEditNode,
+    }),
+    [
+      treeData,
+      setTreeData,
+      newItemType,
+      setNewItemType,
+      selectedNode,
+      deleteNodeItem,
+      editNodeItem,
+      isEditNode,
+      setIsEditNode,
+    ],
+  );
+
   // TODO useEffect для проброса моков как initialValues  в localStorage
   useEffect(() => {
     if (!treeData.length) {
@@ -58,23 +83,7 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  return (
-    <TreeContext.Provider
-      value={{
-        treeData,
-        setTreeData,
-        newItemType,
-        setNewItemType,
-        selectedNode,
-        deleteNodeItem,
-        editNodeItem,
-        isEditNode,
-        setIsEditNode,
-      }}
-    >
-      {children}
-    </TreeContext.Provider>
-  );
+  return <TreeContext.Provider value={contextValues}>{children}</TreeContext.Provider>;
 };
 
 export { TreeProvider, TreeContext };
