@@ -14,7 +14,6 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedNodeId, setSelectedNodeId] = useState<string>('');
   const [newItemType, setNewItemType] = useState<string | null>(null);
   const [isEditNode, setIsEditNode] = useState<boolean>(false);
-  console.log('treeData', treeData);
 
   const setNewItem = useCallback(
     (type: string) => {

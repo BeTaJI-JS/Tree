@@ -15,9 +15,10 @@ const initialValuePath: string[] = ['Корень'];
 const initialValueIdPath: string[] = ['Rootindex'];
 
 const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
-  const { setSelectedNodeId } = useContext(TreeContext) as TreeContextType;
+  const { setSelectedNodeId, selectedNode } = useContext(TreeContext) as TreeContextType;
   const [path, setPath] = useState<string[]>(initialValuePath);
   const [ids, setIds] = useState<string[]>(initialValueIdPath);
+  console.log('selectedNode', selectedNode);
 
   const findPath = useCallback(
     (
@@ -45,6 +46,15 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
     },
     [],
   );
+
+  useEffect(() => {
+    if (currentId) {
+      findPath(treeData, currentId);
+    } else {
+      setPath(initialValuePath);
+      setIds(initialValueIdPath);
+    }
+  }, [currentId, treeData, findPath]);
 
   const renderPath = useMemo(() => {
     return path.map((name, index) => {
@@ -74,11 +84,13 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
     });
   }, [path, ids, setSelectedNodeId]);
 
-  useEffect(() => {
-    if (currentId) {
-      findPath(treeData, currentId);
-    }
-  }, [currentId, treeData, findPath]);
+  console.log('renderPath', renderPath);
+
+  // useEffect(() => { старый вариант без рута
+  //   if (currentId) {
+  //     findPath(treeData, currentId);
+  //   }
+  // }, [currentId, treeData, findPath]);
 
   return <div className={styles.breadCrumbs}>{renderPath}</div>;
 };
