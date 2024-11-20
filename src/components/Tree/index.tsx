@@ -1,28 +1,15 @@
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 
 import { TreeContext } from 'contexts/TreeContext';
 
 import TreeNode from 'components/TreeNode';
 
-import { Node, TreeProps } from 'types/index';
+import { TreeContextType } from 'types/index';
 
-const Tree = ({ data }: TreeProps) => {
-  const { setSelectedNodeId, selectedNode } = useContext(TreeContext)!;
+const Tree = () => {
+  const { treeData } = useContext(TreeContext) as TreeContextType;
 
-  const handleSelect = useCallback(
-    (selectedNode: Node) => {
-      setSelectedNodeId(selectedNode.id);
-    },
-    [setSelectedNodeId],
-  );
-
-  return (
-    <>
-      {data.map((node) => (
-        <TreeNode key={node.id} node={node} onSelect={handleSelect} selectedNodeId={selectedNode?.id} />
-      ))}
-    </>
-  );
+  return treeData.map((node) => <TreeNode key={node.id} node={node} />);
 };
 
 export default Tree;

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { ChangeEventHandler, useContext, useEffect, useState } from 'react';
 
 import cn from 'classnames';
 import { TreeContext } from 'contexts/TreeContext';
@@ -12,10 +12,10 @@ import styles from './styles.module.scss';
 
 import TreeNode from '.';
 
-const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodeProps) => {
+const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen, selectedNodeId }: CustomTreeNodeProps) => {
   const [newName, setNewName] = useState('');
 
-  const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, selectedNode, editNodeItem } = useContext(
+  const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, editNodeItem } = useContext(
     TreeContext,
   ) as TreeContextType;
 
@@ -31,7 +31,7 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
         newItem.children = [];
       }
 
-      const newTreeData = addFolderToNode(treeData, selectedNode?.id, newItem);
+      const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
       setTreeData(newTreeData);
       setNewName('');
       setNewItemType('');
@@ -56,26 +56,26 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
   };
 
   const handleEditNode = () => {
-    if (selectedNode?.id) {
+    if (selectedNodeId) {
       editNodeItem(newName);
     }
   };
 
-  const onChangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     setNewName(e.target.value);
   };
 
   useEffect(() => {
-    if (newItemType && node.id === selectedNode?.id) {
+    if (newItemType && node.id === selectedNodeId) {
       setNewName(newItemType === 'folder' ? 'Новая папка' : 'Новый файл');
     }
-  }, [newItemType, node.id, selectedNode]);
+  }, [newItemType, node.id, selectedNodeId]);
 
   return (
     <>
       <div
         onClick={toggleOpen}
-        className={cn(selectedNode && selectedNode.id === node.id && styles.activeNode, styles.treeNodeContainer)}
+        className={cn(selectedNodeId === node.id && styles.activeNode, styles.treeNodeContainer)}
       >
         <div className={styles.treeNode} onClick={() => onSelect(node)}>
           {node.type === 'folder' && (
@@ -84,7 +84,7 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
           <span>{node.name}</span>
         </div>
       </div>
-      {!!newItemType && node.id === selectedNode?.id && (
+      {!!newItemType && node.id === selectedNodeId && (
         <InputNode valueInput={newName} handleNode={handleAddNewItem} onChange={onChangeInputHandler} />
       )}
       {isEditNode && <InputNode valueInput={newName} handleNode={handleEditNode} onChange={onChangeInputHandler} />}
@@ -93,7 +93,7 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
           {node.children
             .sort((a) => (a.type === 'folder' ? -1 : 1))
             .map((child) => (
-              <TreeNode key={child.id} node={child} onSelect={onSelect} selectedNodeId={selectedNode?.id} />
+              <TreeNode key={child.id} node={child} onSelect={onSelect} selectedNodeId={selectedNodeId} />
             ))}
         </div>
       )}

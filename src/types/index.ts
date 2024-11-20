@@ -11,11 +11,12 @@ export type LayoutProps = {
 
 export type TreeProps = {
   data: Node[];
+  nodeId?: string;
 };
 
 export type TreeNodeProps = {
   node: Node;
-  onSelect: (node: Node) => void;
+  onSelect?: (node: Node) => void; // к удалению думаю
   selectedNodeId?: string;
 };
 
@@ -30,11 +31,11 @@ export type CustomTreeNodeProps = {
 export type TreeContextType = {
   treeData: Node[];
   setTreeData: (data: Node[]) => void;
-  setSelectedNodeId: (id: string) => void;
   setNewItem: (type: string) => void;
   newItemType: string | null;
   setNewItemType: (type: string) => void;
-  selectedNode: Node | undefined;
+  selectedNode?: Node | null; // к удалению
+  // selectedNodeId?: string;// !удалил
   deleteNodeItem: () => void;
   editNodeItem: (newName: string) => void;
   isEditNode: boolean;

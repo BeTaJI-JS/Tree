@@ -1,15 +1,7 @@
-import ControlPanel from 'components/ControlPanel';
-
 import { LayoutProps } from 'types/index';
 
 import styles from './styles.module.scss';
-const Layout = ({ children }: LayoutProps) => {
-  return (
-    <div className={styles.layoutContainer}>
-      <ControlPanel />
-      {children}
-    </div>
-  );
-};
+
+const Layout = ({ children }: LayoutProps) => <div className={styles.layoutContainer}>{children}</div>;
 
 export default Layout;

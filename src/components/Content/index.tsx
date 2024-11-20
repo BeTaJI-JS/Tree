@@ -1,22 +1,20 @@
-import { useContext } from 'react';
+import { TreeProvider } from 'contexts/TreeContext';
 
-import { TreeContext } from 'contexts/TreeContext';
-
+import ControlPanel from 'components/ControlPanel';
 import Tree from 'components/Tree';
-
-import { TreeContextType } from 'types/index';
 
 import styles from './styles.module.scss';
 const Content = () => {
-  const { treeData } = useContext(TreeContext) as TreeContextType;
-
   return (
-    <div className={styles.contentContainer}>
-      <div className={styles.contentContainerLeft}>
-        <Tree data={treeData} />
+    <TreeProvider>
+      <ControlPanel />
+      <div className={styles.contentContainer}>
+        <div className={styles.contentContainerLeft}>
+          <Tree />
+        </div>
+        <div />
       </div>
-      <div />
-    </div>
+    </TreeProvider>
   );
 };
 

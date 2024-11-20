@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { data } from 'data/index';
+import { useSearchParams } from 'react-router-dom';
 
 import { loadData, saveData } from 'utils/LocalStorageHelpers';
 import { deleteNodeById, editNodeById, getNodeById } from 'utils/NodeHelpers';
@@ -11,9 +12,12 @@ const TreeContext = React.createContext<TreeContextType | null>(null);
 
 const TreeProvider = ({ children }: { children: React.ReactNode }) => {
   const [treeData, setTreeData] = useState(loadData() || data); //!  удалить стейт со времененм и использовать только сторадж( на последок оставить)
-  const [selectedNodeId, setSelectedNodeId] = useState<string>('');
   const [newItemType, setNewItemType] = useState<string | null>(null);
   const [isEditNode, setIsEditNode] = useState<boolean>(false);
+
+  const [searchParams] = useSearchParams();
+
+  const selectedNodeId = searchParams.get('id');
 
   const setNewItem = useCallback(
     (type: string) => {
@@ -23,22 +27,24 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const selectedNode = useMemo(() => {
-    return getNodeById(treeData, selectedNodeId);
+    return selectedNodeId ? getNodeById(treeData, selectedNodeId) : null;
   }, [treeData, selectedNodeId]);
 
   const deleteNodeItem = useCallback(() => {
-    deleteNodeById(treeData, selectedNodeId);
-    setTreeData([...treeData]);
+    if (selectedNodeId) {
+      deleteNodeById(treeData, selectedNodeId);
+      setTreeData((prev) => [...prev]);
+    }
   }, [selectedNodeId, treeData]);
 
   const editNodeItem = useCallback(
     (newName: string) => {
-      console.log('КЛИК редактрования');
+      if (selectedNodeId) {
+        editNodeById(treeData, selectedNodeId, newName);
 
-      editNodeById(treeData, selectedNodeId, newName);
-
-      setTreeData([...treeData]);
-      setIsEditNode(false);
+        setTreeData([...treeData]);
+        setIsEditNode(false);
+      }
     },
     [selectedNodeId, treeData],
   );
@@ -64,7 +70,6 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         treeData,
         setTreeData,
-        setSelectedNodeId,
         setNewItem,
         newItemType,
         setNewItemType,

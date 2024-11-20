@@ -1,13 +1,13 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { TreeContext } from 'contexts/TreeContext';
+import { useSearchParams } from 'react-router-dom';
 
-import { Node, TreeContextType } from 'types/index';
+import { Node } from 'types/index';
 
 import styles from './styles.module.scss';
 
 type BreadCrumbsProps = {
-  treeData: Node[];
+  treeData?: Node[];
   currentId: string | undefined;
 };
 
@@ -15,10 +15,10 @@ const initialValuePath: string[] = ['Корень'];
 const initialValueIdPath: string[] = ['Rootindex'];
 
 const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
-  const { setSelectedNodeId, selectedNode } = useContext(TreeContext) as TreeContextType;
   const [path, setPath] = useState<string[]>(initialValuePath);
   const [ids, setIds] = useState<string[]>(initialValueIdPath);
-  console.log('selectedNode', selectedNode);
+
+  const setSearchParams = useSearchParams()[1];
 
   const findPath = useCallback(
     (
@@ -48,7 +48,7 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
   );
 
   useEffect(() => {
-    if (currentId) {
+    if (currentId && treeData) {
       findPath(treeData, currentId);
     } else {
       setPath(initialValuePath);
@@ -63,7 +63,7 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
       if (path.length > 5) {
         if (index === 0 || index === path.length - 1 || index === path.length - 2) {
           return (
-            <span key={id} className={styles.breadcrumb} onClick={() => setSelectedNodeId(id)}>
+            <span key={id} className={styles.breadcrumb} onClick={() => setSearchParams({ id })}>
               {name}
               {index < path.length - 1 && ' / '}
             </span>
@@ -76,15 +76,13 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
       }
 
       return (
-        <span key={id} className={styles.breadcrumb} onClick={() => setSelectedNodeId(id)}>
+        <span key={id} className={styles.breadcrumb} onClick={() => setSearchParams({ id })}>
           {name}
           {index < path.length - 1 && ' / '}
         </span>
       );
     });
-  }, [path, ids, setSelectedNodeId]);
-
-  console.log('renderPath', renderPath);
+  }, [path, ids, setSearchParams]);
 
   // useEffect(() => { старый вариант без рута
   //   if (currentId) {
