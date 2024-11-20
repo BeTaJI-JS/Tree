@@ -19,13 +19,6 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const selectedNodeId = searchParams.get('id');
 
-  const setNewItem = useCallback(
-    (type: string) => {
-      setNewItemType(type);
-    },
-    [setNewItemType],
-  );
-
   const selectedNode = useMemo(() => {
     return selectedNodeId ? getNodeById(treeData, selectedNodeId) : null;
   }, [treeData, selectedNodeId]);
@@ -70,7 +63,6 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         treeData,
         setTreeData,
-        setNewItem,
         newItemType,
         setNewItemType,
         selectedNode,

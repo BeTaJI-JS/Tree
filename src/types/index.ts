@@ -31,11 +31,9 @@ export type CustomTreeNodeProps = {
 export type TreeContextType = {
   treeData: Node[];
   setTreeData: (data: Node[]) => void;
-  setNewItem: (type: string) => void;
   newItemType: string | null;
   setNewItemType: (type: string) => void;
   selectedNode?: Node | null; // к удалению
-  // selectedNodeId?: string;// !удалил
   deleteNodeItem: () => void;
   editNodeItem: (newName: string) => void;
   isEditNode: boolean;
