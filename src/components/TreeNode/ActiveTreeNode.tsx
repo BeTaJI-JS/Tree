@@ -12,7 +12,14 @@ import styles from './styles.module.scss';
 
 import TreeNode from '.';
 
-const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen, selectedNodeId }: CustomTreeNodeProps) => {
+const ActiveTreeNode = ({
+  node,
+  onSelect,
+  isOpen,
+  toggleOpen,
+  selectedNodeId,
+  defaultExpandedNodesIds,
+}: CustomTreeNodeProps) => {
   const [newName, setNewName] = useState('');
 
   const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, editNodeItem } = useContext(
@@ -93,7 +100,13 @@ const ActiveTreeNode = ({ node, onSelect, isOpen, toggleOpen, selectedNodeId }: 
           {node.children
             .sort((a) => (a.type === 'folder' ? -1 : 1))
             .map((child) => (
-              <TreeNode key={child.id} node={child} onSelect={onSelect} selectedNodeId={selectedNodeId} />
+              <TreeNode
+                key={child.id}
+                node={child}
+                onSelect={onSelect}
+                selectedNodeId={selectedNodeId}
+                defaultExpandedNodesIds={defaultExpandedNodesIds}
+              />
             ))}
         </div>
       )}

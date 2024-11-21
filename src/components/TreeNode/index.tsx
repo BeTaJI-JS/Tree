@@ -7,8 +7,8 @@ import { Node, TreeNodeProps } from 'types/index';
 import ActiveTreeNode from './ActiveTreeNode';
 import SimpleTreeNode from './SimpleTreeNode';
 
-const TreeNode = ({ node }: TreeNodeProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const TreeNode = ({ node, defaultExpandedNodesIds }: TreeNodeProps) => {
+  const [isOpen, setIsOpen] = useState(!!defaultExpandedNodesIds[node.id]);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -35,9 +35,16 @@ const TreeNode = ({ node }: TreeNodeProps) => {
       isOpen={isOpen}
       toggleOpen={toggleOpen}
       selectedNodeId={currentNodeId}
+      defaultExpandedNodesIds={defaultExpandedNodesIds}
     />
   ) : (
-    <SimpleTreeNode node={node} onSelect={handleSelect} isOpen={isOpen} toggleOpen={toggleOpen} />
+    <SimpleTreeNode
+      node={node}
+      onSelect={handleSelect}
+      isOpen={isOpen}
+      toggleOpen={toggleOpen}
+      defaultExpandedNodesIds={defaultExpandedNodesIds}
+    />
   );
 };
 

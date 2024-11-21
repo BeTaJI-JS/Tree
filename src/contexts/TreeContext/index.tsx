@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { data } from 'data/index';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import { useSearchParams } from 'react-router-dom';
 
 import { loadData, saveData } from 'utils/LocalStorageHelpers';
@@ -11,7 +12,7 @@ import { TreeContextType } from 'types/index';
 const TreeContext = React.createContext<TreeContextType | null>(null);
 
 const TreeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [treeData, setTreeData] = useState(loadData() || data); //!  удалить стейт со времененм и использовать только сторадж( на последок оставить)
+  const [treeData, setTreeData] = useLocalStorage('treeData', data);
   const [newItemType, setNewItemType] = useState<string | null>(null);
   const [isEditNode, setIsEditNode] = useState<boolean>(false);
 
@@ -24,18 +25,18 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
       deleteNodeById(treeData, selectedNodeId);
       setTreeData((prev) => [...prev]);
     }
-  }, [selectedNodeId, treeData]);
+  }, [selectedNodeId, treeData, setTreeData]);
 
   const editNodeItem = useCallback(
     (newName: string) => {
       if (selectedNodeId) {
         editNodeById(treeData, selectedNodeId, newName);
 
-        setTreeData([...treeData]);
+        setTreeData((prev) => [...prev]);
         setIsEditNode(false);
       }
     },
-    [selectedNodeId, treeData],
+    [selectedNodeId, treeData, setTreeData],
   );
 
   const selectedNode = useMemo(() => {
@@ -81,7 +82,7 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
     if (storedData.length > 0) {
       setTreeData(storedData);
     }
-  }, []);
+  }, [setTreeData]);
 
   return <TreeContext.Provider value={contextValues}>{children}</TreeContext.Provider>;
 };

@@ -18,6 +18,7 @@ export type TreeNodeProps = {
   node: Node;
   onSelect?: (node: Node) => void; // к удалению думаю
   selectedNodeId?: string;
+  defaultExpandedNodesIds: Record<string, boolean>;
 };
 
 export type CustomTreeNodeProps = {
@@ -26,6 +27,7 @@ export type CustomTreeNodeProps = {
   selectedNodeId?: string;
   isOpen: boolean;
   toggleOpen: (e: React.MouseEvent) => void;
+  defaultExpandedNodesIds: Record<string, boolean>;
 };
 
 export type TreeContextType = {

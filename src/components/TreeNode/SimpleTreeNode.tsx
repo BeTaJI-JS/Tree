@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 import TreeNode from '.';
 
-const SimpleTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodeProps) => {
+const SimpleTreeNode = ({ node, onSelect, isOpen, toggleOpen, defaultExpandedNodesIds }: CustomTreeNodeProps) => {
   return (
     <>
       <div onClick={toggleOpen} className={styles.treeNodeContainer}>
@@ -20,7 +20,12 @@ const SimpleTreeNode = ({ node, onSelect, isOpen, toggleOpen }: CustomTreeNodePr
           {node.children
             .sort((a) => (a.type === 'folder' ? -1 : 1))
             .map((child) => (
-              <TreeNode key={child.id} node={child} onSelect={onSelect} />
+              <TreeNode
+                key={child.id}
+                node={child}
+                onSelect={onSelect}
+                defaultExpandedNodesIds={defaultExpandedNodesIds}
+              />
             ))}
         </div>
       )}

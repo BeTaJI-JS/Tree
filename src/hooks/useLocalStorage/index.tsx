@@ -8,6 +8,7 @@ export const useLocalStorage = (key: string, defaultValue?: Node[]) => {
     if (jsonValue != null) return JSON.parse(jsonValue);
     if (defaultValue) return defaultValue;
   });
+
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);
