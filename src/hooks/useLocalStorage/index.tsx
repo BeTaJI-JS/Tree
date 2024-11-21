@@ -11,9 +11,6 @@ export const useLocalStorage = (key: string, defaultValue?: Node[]) => {
 
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
-      console.log('event.key ', event.key);
-      console.log('key ', key);
-
       if (event.key === key) {
         setValue(JSON.parse(event.newValue || '[]'));
       }
