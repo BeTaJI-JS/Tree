@@ -10,6 +10,23 @@ export const useLocalStorage = (key: string, defaultValue?: Node[]) => {
   });
 
   useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      console.log('event.key ', event.key);
+      console.log('key ', key);
+
+      if (event.key === key) {
+        setValue(JSON.parse(event.newValue || '[]'));
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [key]);
+
+  useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);
 
