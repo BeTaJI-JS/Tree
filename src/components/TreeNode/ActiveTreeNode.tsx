@@ -4,10 +4,9 @@ import cn from 'classnames';
 import { TreeContext } from 'contexts/TreeContext';
 import InputNode from 'fragments/InputNode';
 
-import { setUniqId } from 'utils/index';
-import { addFolderToNode } from 'utils/NodeHelpers';
+import { handleAddNewItem } from 'utils/NodeHelpers';
 
-import { CustomTreeNodeProps, Node, TreeContextType } from 'types/index';
+import { CustomTreeNodeProps, TreeContextType } from 'types/index';
 
 import styles from './styles.module.scss';
 
@@ -27,27 +26,8 @@ const ActiveTreeNode = ({
     TreeContext,
   ) as TreeContextType;
 
-  console.log('newItemType', newItemType);
-
-  const handleAddNewItem = () => {
-    if (newName.trim()) {
-      const newItem: Node = {
-        id: setUniqId(),
-        name: newName,
-        type: newItemType as 'file' | 'folder',
-      };
-
-      if (newItemType === 'folder') {
-        newItem.children = [];
-      }
-
-      const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
-      // setTreeData(selectedNodeId === 'Rootindex' ? [...treeData, newItem] : newTreeData);
-      setTreeData(newTreeData);
-
-      setNewName('');
-      setNewItemType('');
-    }
+  const handleAddNewItemCallback = () => {
+    handleAddNewItem(treeData, setTreeData, selectedNodeId, newName, setNewName, newItemType, setNewItemType);
   };
 
   const handleEditNode = () => {
@@ -79,7 +59,7 @@ const ActiveTreeNode = ({
           <span>{node.name}</span>
         </div>
         {!!newItemType && node.id === selectedNodeId && (
-          <InputNode valueInput={newName} handleNode={handleAddNewItem} onChange={onChangeInputHandler} />
+          <InputNode valueInput={newName} handleNode={handleAddNewItemCallback} onChange={onChangeInputHandler} />
         )}
       </div>
       {isEditNode && <InputNode valueInput={newName} handleNode={handleEditNode} onChange={onChangeInputHandler} />}

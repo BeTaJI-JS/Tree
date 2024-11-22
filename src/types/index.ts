@@ -34,7 +34,7 @@ export type TreeContextType = {
   treeData: Node[];
   setTreeData: (data: Node[]) => void;
   newItemType: string | null;
-  setNewItemType: (type: string) => void;
+  setNewItemType: (type: string | null) => void;
   selectedNode?: Node | null; // к удалению
   deleteNodeItem: () => void;
   editNodeItem: (newName: string) => void;

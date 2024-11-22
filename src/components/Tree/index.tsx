@@ -6,10 +6,9 @@ import { useSearchParams } from 'react-router-dom';
 
 import TreeNode from 'components/TreeNode';
 
-import { setUniqId } from 'utils/index';
-import { getNodeIdsBreadCrumbs } from 'utils/NodeHelpers';
+import { getNodeIdsBreadCrumbs, handleAddNewItem } from 'utils/NodeHelpers';
 
-import { Node, TreeContextType } from 'types/index';
+import { TreeContextType } from 'types/index';
 
 const Tree = () => {
   const { treeData, setTreeData, newItemType, setNewItemType } = useContext(TreeContext) as TreeContextType;
@@ -25,23 +24,8 @@ const Tree = () => {
     [treeData, currentNodeId],
   );
 
-  const handleAddNewItem = () => {
-    if (newName.trim()) {
-      const newItem: Node = {
-        id: setUniqId(),
-        name: newName,
-        type: newItemType as 'file' | 'folder',
-      };
-
-      if (newItemType === 'folder') {
-        newItem.children = [];
-      }
-
-      // const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
-      setTreeData([...treeData, newItem]);
-      setNewName('');
-      setNewItemType('');
-    }
+  const handleAddNewItemCallback = () => {
+    handleAddNewItem(treeData, setTreeData, currentNodeId, newName, setNewName, newItemType, setNewItemType);
   };
 
   return (
@@ -51,7 +35,11 @@ const Tree = () => {
       ))}
       {!currentNodeId ||
         (currentNodeId === 'Rootindex' && newItemType && (
-          <InputNode valueInput={newName} handleNode={handleAddNewItem} onChange={(e) => setNewName(e.target.value)} />
+          <InputNode
+            valueInput={newName}
+            handleNode={handleAddNewItemCallback}
+            onChange={(e) => setNewName(e.target.value)}
+          />
         ))}
     </>
   );

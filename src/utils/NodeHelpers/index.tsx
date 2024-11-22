@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { Node } from 'types/index';
 
 export const getNodeById = (treeData: Node[], nodeId?: string): Node | null => {
@@ -86,4 +88,32 @@ export const addFolderToNode = (nodes: Node[], selectedId: string | undefined, n
     }
     return node;
   });
+};
+
+export const handleAddNewItem = (
+  treeData: Node[],
+  setTreeData: (data: Node[]) => void,
+  selectedNodeId: string | undefined,
+  newName: string,
+  setNewName: (name: string) => void,
+  newItemType: string | null,
+  setNewItemType: (type: string | null) => void,
+) => {
+  if (newName.trim()) {
+    const newItem: Node = {
+      id: nanoid(),
+      name: newName,
+      type: newItemType as 'file' | 'folder',
+    };
+
+    if (newItemType === 'folder') {
+      newItem.children = [];
+    }
+
+    const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
+    setTreeData(selectedNodeId === 'Rootindex' ? [...treeData, newItem] : newTreeData);
+
+    setNewName('');
+    setNewItemType('');
+  }
 };
