@@ -5,6 +5,7 @@ import { TreeContext } from 'contexts/TreeContext';
 import InputNode from 'fragments/InputNode';
 
 import { setUniqId } from 'utils/index';
+import { addFolderToNode } from 'utils/NodeHelpers';
 
 import { CustomTreeNodeProps, Node, TreeContextType } from 'types/index';
 
@@ -41,27 +42,12 @@ const ActiveTreeNode = ({
       }
 
       const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
-      setTreeData(selectedNodeId === 'Rootindex' ? [...treeData, newItem] : newTreeData);
+      // setTreeData(selectedNodeId === 'Rootindex' ? [...treeData, newItem] : newTreeData);
+      setTreeData(newTreeData);
+
       setNewName('');
       setNewItemType('');
     }
-  };
-  const addFolderToNode = (nodes: Node[], selectedId: string | undefined, newItem: Node): Node[] => {
-    return nodes.map((node) => {
-      if (node.id === selectedId && node.type !== 'file') {
-        return {
-          ...node,
-          children: [...(node.children || []), newItem],
-        };
-      }
-      if (node.children) {
-        return {
-          ...node,
-          children: addFolderToNode(node.children, selectedId, newItem),
-        };
-      }
-      return node;
-    });
   };
 
   const handleEditNode = () => {
@@ -92,7 +78,7 @@ const ActiveTreeNode = ({
           )}
           <span>{node.name}</span>
         </div>
-        {((!!newItemType && node.id === selectedNodeId) || (selectedNodeId === 'Rootindex' && !!newItemType)) && (
+        {!!newItemType && node.id === selectedNodeId && (
           <InputNode valueInput={newName} handleNode={handleAddNewItem} onChange={onChangeInputHandler} />
         )}
       </div>

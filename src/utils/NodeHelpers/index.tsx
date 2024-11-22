@@ -69,3 +69,21 @@ export const getNodeIdsBreadCrumbs = (nodes: Node[], id: string): string[] => {
 
   return [];
 };
+
+export const addFolderToNode = (nodes: Node[], selectedId: string | undefined, newItem: Node): Node[] => {
+  return nodes.map((node) => {
+    if (node.id === selectedId && node.type !== 'file') {
+      return {
+        ...node,
+        children: [...(node.children || []), newItem],
+      };
+    }
+    if (node.children) {
+      return {
+        ...node,
+        children: addFolderToNode(node.children, selectedId, newItem),
+      };
+    }
+    return node;
+  });
+};
