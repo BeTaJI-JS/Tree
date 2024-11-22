@@ -26,6 +26,8 @@ const ActiveTreeNode = ({
     TreeContext,
   ) as TreeContextType;
 
+  console.log('newItemType', newItemType);
+
   const handleAddNewItem = () => {
     if (newName.trim()) {
       const newItem: Node = {
@@ -39,7 +41,7 @@ const ActiveTreeNode = ({
       }
 
       const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
-      setTreeData(newTreeData);
+      setTreeData(selectedNodeId === 'Rootindex' ? [...treeData, newItem] : newTreeData);
       setNewName('');
       setNewItemType('');
     }
@@ -90,10 +92,10 @@ const ActiveTreeNode = ({
           )}
           <span>{node.name}</span>
         </div>
+        {((!!newItemType && node.id === selectedNodeId) || (selectedNodeId === 'Rootindex' && !!newItemType)) && (
+          <InputNode valueInput={newName} handleNode={handleAddNewItem} onChange={onChangeInputHandler} />
+        )}
       </div>
-      {!!newItemType && node.id === selectedNodeId && (
-        <InputNode valueInput={newName} handleNode={handleAddNewItem} onChange={onChangeInputHandler} />
-      )}
       {isEditNode && <InputNode valueInput={newName} handleNode={handleEditNode} onChange={onChangeInputHandler} />}
       {isOpen && node.children && (
         <div className={styles.treeChildNodeContainer}>

@@ -28,7 +28,7 @@ const TreeNode = ({ node, defaultExpandedNodesIds }: TreeNodeProps) => {
     [setSearchParams],
   );
 
-  return currentNodeId === node.id ? (
+  return currentNodeId === node.id || currentNodeId === 'Rootindex' ? (
     <ActiveTreeNode
       node={node}
       onSelect={handleSelect}

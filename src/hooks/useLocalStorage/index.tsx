@@ -6,7 +6,7 @@ export const useLocalStorage = (key: string, defaultValue?: Node[]) => {
   const [value, setValue] = useState<Node[]>(() => {
     const jsonValue = localStorage.getItem(key);
 
-    if (jsonValue !== null && !jsonValue.length) return JSON.parse(jsonValue);
+    if (jsonValue !== null) return JSON.parse(jsonValue);
     if (defaultValue) return defaultValue;
   });
 
