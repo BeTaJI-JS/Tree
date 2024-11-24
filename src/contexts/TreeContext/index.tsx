@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { data } from 'data/index';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { useSearchParams } from 'react-router-dom';
 
 import { loadData, saveData } from 'utils/LocalStorageHelpers';
 import { deleteNodeById, editNodeById, getNodeById } from 'utils/NodeHelpers';
 
-import { TreeContextType } from 'types/index';
+import { TreeContextType } from 'types';
+
+import { data } from 'data';
 
 const TreeContext = React.createContext<TreeContextType | null>(null);
 

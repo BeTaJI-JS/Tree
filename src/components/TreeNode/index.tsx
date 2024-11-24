@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Node, TreeNodeProps } from 'types/index';
+import { Node, TreeNodeProps } from 'types';
 
 import ActiveTreeNode from './ActiveTreeNode';
 import SimpleTreeNode from './SimpleTreeNode';

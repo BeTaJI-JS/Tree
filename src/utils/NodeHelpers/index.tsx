@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { Node } from 'types/index';
+import { Node } from 'types';
 
 export const getNodeById = (treeData: Node[], nodeId?: string): Node | null => {
   for (const node of treeData) {

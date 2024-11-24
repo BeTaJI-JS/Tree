@@ -50,17 +50,12 @@ export default tseslint.config(
             },
             {
               group: 'internal',
-              pattern: 'assets/**',
-              position: 'after',
-            },
-            {
-              group: 'internal',
-              pattern: 'pages/**',
-              position: 'after',
-            },
-            {
-              group: 'internal',
               pattern: 'layouts/**',
+              position: 'after',
+            },
+            {
+              group: 'internal',
+              pattern: 'contexts/**',
               position: 'after',
             },
             {
@@ -70,17 +65,22 @@ export default tseslint.config(
             },
             {
               group: 'internal',
+              pattern: 'fragments/**',
+              position: 'after',
+            },
+            {
+              group: 'internal',
               pattern: 'utils/**',
               position: 'after',
             },
             {
               group: 'internal',
-              pattern: 'types/**',
+              pattern: 'types',
               position: 'after',
             },
             {
               group: 'internal',
-              pattern: 'helpers/**',
+              pattern: 'data',
               position: 'after',
             },
             {

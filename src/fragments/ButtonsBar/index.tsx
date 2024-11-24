@@ -5,13 +5,13 @@ import File from '/file.svg';
 import Edit from '/edit.svg';
 import Delete from '/delete.svg';
 
-import { TreeContext } from 'contexts/TreeContext';
-
 import { useContext } from 'react';
 
 import styles from './styles.module.scss';
 
-import { TreeContextType } from 'types/index';
+import { TreeContext } from 'contexts/TreeContext';
+
+import { TreeContextType } from 'types';
 
 const ButtonsBar = () => {
   const { setNewItemType, selectedNode, deleteNodeItem, setIsEditNode } = useContext(TreeContext) as TreeContextType;

@@ -16,11 +16,6 @@ createRoot(document.getElementById('root')!).render(
         router={router}
         future={{
           v7_startTransition: true,
-          // v7_normalizeFormMethod: true, // не работает  отключение ворнингов в консоли по роутер дому
-          // v7_partialHydration: true,
-          // v7_relativeSplatPath: true,
-          // v7_skipActionErrorRevalidation: true,
-          // v7_fetcherPersist: true,
         }}
       />
     </Layout>

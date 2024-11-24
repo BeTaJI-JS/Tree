@@ -1,4 +1,4 @@
-import { LayoutProps } from 'types/index';
+import { LayoutProps } from 'types';
 
 import styles from './styles.module.scss';
 

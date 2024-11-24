@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { Node } from 'types/index';
+import { Node } from 'types';
 
 import styles from './styles.module.scss';
 

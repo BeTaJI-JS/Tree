@@ -1,14 +1,16 @@
 import { useContext, useMemo, useState } from 'react';
 
-import { TreeContext } from 'contexts/TreeContext';
-import InputNode from 'fragments/InputNode';
 import { useSearchParams } from 'react-router-dom';
+
+import { TreeContext } from 'contexts/TreeContext';
 
 import TreeNode from 'components/TreeNode';
 
+import InputNode from 'fragments/InputNode';
+
 import { getNodeIdsBreadCrumbs, handleAddNewItem } from 'utils/NodeHelpers';
 
-import { TreeContextType } from 'types/index';
+import { TreeContextType } from 'types';
 
 const Tree = () => {
   const { treeData, setTreeData, newItemType, setNewItemType } = useContext(TreeContext) as TreeContextType;

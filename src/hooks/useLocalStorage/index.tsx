@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Node } from 'types/index';
+import { Node } from 'types';
 
 export const useLocalStorage = (key: string, defaultValue?: Node[]) => {
   const [value, setValue] = useState<Node[]>(() => {

@@ -1,12 +1,14 @@
 import { ChangeEventHandler, useContext, useEffect, useState } from 'react';
 
 import cn from 'classnames';
+
 import { TreeContext } from 'contexts/TreeContext';
+
 import InputNode from 'fragments/InputNode';
 
 import { handleAddNewItem } from 'utils/NodeHelpers';
 
-import { CustomTreeNodeProps, TreeContextType } from 'types/index';
+import { CustomTreeNodeProps, TreeContextType } from 'types';
 
 import styles from './styles.module.scss';
 

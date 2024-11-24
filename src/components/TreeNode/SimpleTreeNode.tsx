@@ -1,4 +1,4 @@
-import { CustomTreeNodeProps } from 'types/index';
+import { CustomTreeNodeProps } from 'types';
 
 import styles from './styles.module.scss';
 

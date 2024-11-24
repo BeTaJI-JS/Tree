@@ -20,16 +20,12 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      assets: resolve(__dirname, './src/assets/'),
       components: resolve(__dirname, './src/components/'),
       contexts: resolve(__dirname, './src/contexts/'),
       fragments: resolve(__dirname, './src/fragments/'),
-      helpers: resolve(__dirname, './src/helpers/'),
       hooks: resolve(__dirname, './src/hooks/'),
       layouts: resolve(__dirname, './src/layouts/'),
-      pages: resolve(__dirname, './src/pages/'),
-      router: resolve(__dirname, './src/routers/'),
-      store: resolve(__dirname, './src/store/'),
+      routers: resolve(__dirname, './src/routers/'),
       styles: resolve(__dirname, './src/styles/'),
       data: resolve(__dirname, './src/data/'),
       types: resolve(__dirname, './src/types/'),

@@ -1,4 +1,4 @@
-import { Node } from 'types/index';
+import { Node } from 'types';
 
 export const saveData = (data: Node[]) => {
   localStorage.setItem('TreeData', JSON.stringify(data));
