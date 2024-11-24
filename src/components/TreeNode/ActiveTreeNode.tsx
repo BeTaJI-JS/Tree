@@ -48,15 +48,15 @@ const ActiveTreeNode = ({
 
   return (
     <>
-      <div
-        onClick={toggleOpen}
-        className={cn(selectedNodeId === node.id && styles.activeNode, styles.treeNodeContainer)}
-      >
+      <div onClick={toggleOpen} className={styles.treeNodeContainer}>
         <div className={styles.treeNode} onClick={() => onSelect(node)}>
           {node.type === 'folder' && (
-            <span>{isOpen ? <img src={'/openedArrow.svg'} /> : <img src={'/notOpenedArrow.svg'} />}</span>
+            <>
+              <span>{isOpen ? <img src={'/openedArrow.svg'} /> : <img src={'/notOpenedArrow.svg'} />}</span>
+              <img src='/folderItem.svg' />
+            </>
           )}
-          <span>{node.name}</span>
+          <span className={cn(selectedNodeId === node.id && styles.activeNode)}>{node.name}</span>
         </div>
         {!!newItemType && node.id === selectedNodeId && (
           <InputNode valueInput={newName} handleNode={handleAddNewItemCallback} onChange={onChangeInputHandler} />

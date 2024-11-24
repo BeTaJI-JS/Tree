@@ -3,6 +3,10 @@
 .treeNodeContainer {
   cursor: pointer;
   position: relative;
+
+  &:hover {
+    background-color: $darkBlue;
+  }
 }
 
 .treeChildNodeContainer {
@@ -14,7 +18,8 @@
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: 10px;
+  padding-left: 4px;
+  gap: 4px;
 
   & > span {
     word-wrap: break-word;

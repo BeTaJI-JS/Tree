@@ -12,6 +12,7 @@ const SimpleTreeNode = ({ node, onSelect, isOpen, toggleOpen, defaultExpandedNod
           {node.type === 'folder' && (
             <span>{isOpen ? <img src={'/openedArrow.svg'} /> : <img src={'/notOpenedArrow.svg'} />}</span>
           )}
+          {node.type === 'folder' && <img src='/folderItem.svg' />}
           <span>{node.name}</span>
         </div>
       </div>
