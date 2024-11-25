@@ -39,18 +39,20 @@ export const deleteNodeById = (treeData: Node[], nodeId?: string): Node | null =
 };
 
 export const editNodeById = (treeData: Node[], nodeId: string, newName: string): Node | null => {
-  for (let i = 0; i < treeData.length; i++) {
-    const node = treeData[i];
-    if (node.id === nodeId) {
+  const stack = [...treeData];
+  console.log('editNodeById');
+  console.count('editNodeById');
+
+  while (stack.length) {
+    const node = stack.pop();
+
+    if (node && node.id === nodeId) {
       node.name = newName;
       return null;
     }
-    if (node.children) {
-      const res = editNodeById(node.children, nodeId, newName);
 
-      if (res) {
-        return res;
-      }
+    if (node?.children) {
+      stack.push(...node.children);
     }
   }
 
@@ -76,7 +78,7 @@ export const getNodeIdsBreadCrumbs = (nodes: Node[], id: string): string[] => {
   return [];
 };
 
-export const addFolderToNode = (nodes: Node[], selectedId: string | undefined, newItem: Node): Node[] => {
+const addFolderToNode = (nodes: Node[], selectedId: string | undefined, newItem: Node): Node[] => {
   return nodes.map((node) => {
     if (node.id === selectedId && node.type !== 'file') {
       return {
