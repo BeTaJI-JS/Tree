@@ -3,7 +3,8 @@ import { nanoid } from 'nanoid';
 import { Node } from 'types';
 
 export const getNodeById = (treeData: Node[], nodeId?: string): Node | null => {
-  for (const node of treeData) {
+  for (let i = 0; i < treeData.length; i++) {
+    const node = treeData[i];
     if (node.id === nodeId) {
       return node;
     }
