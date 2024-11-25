@@ -40,8 +40,6 @@ export const deleteNodeById = (treeData: Node[], nodeId?: string): Node | null =
 
 export const editNodeById = (treeData: Node[], nodeId: string, newName: string): Node | null => {
   const stack = [...treeData];
-  console.log('editNodeById');
-  console.count('editNodeById');
 
   while (stack.length) {
     const node = stack.pop();
