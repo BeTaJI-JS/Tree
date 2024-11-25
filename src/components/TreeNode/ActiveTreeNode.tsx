@@ -64,7 +64,7 @@ const ActiveTreeNode = memo(
         {isOpen && node.children && (
           <div className={styles.treeChildNodeContainer}>
             <ChildrenNodes
-              node={node.children || []}
+              node={node.children}
               onSelect={onSelect}
               selectedNodeId={selectedNodeId}
               defaultExpandedNodesIds={defaultExpandedNodesIds}
