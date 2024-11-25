@@ -49,7 +49,7 @@ const ActiveTreeNode = ({
   return (
     <>
       <div onClick={toggleOpen} className={styles.treeNodeContainer}>
-        <div className={styles.treeNode} onClick={() => onSelect(node)}>
+        <div className={styles.treeNode} onClick={() => onSelect?.(node)}>
           {node.type === 'folder' && (
             <>
               <span>

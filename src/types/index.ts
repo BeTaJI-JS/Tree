@@ -16,26 +16,22 @@ export type TreeProps = {
 
 export type TreeNodeProps = {
   node: Node;
-  onSelect?: (node: Node) => void; // к удалению думаю
+  onSelect?: (node: Node) => void;
   selectedNodeId?: string;
   defaultExpandedNodesIds: Record<string, boolean>;
 };
 
 export type CustomTreeNodeProps = {
-  node: Node;
-  onSelect: (node: Node) => void;
-  selectedNodeId?: string;
   isOpen: boolean;
   toggleOpen: (e: React.MouseEvent) => void;
-  defaultExpandedNodesIds: Record<string, boolean>;
-};
+} & TreeNodeProps;
 
 export type TreeContextType = {
   treeData: Node[];
   setTreeData: (data: Node[]) => void;
   newItemType: string | null;
   setNewItemType: (type: string | null) => void;
-  selectedNode?: Node | null; // к удалению
+  selectedNode?: Node | null;
   deleteNodeItem: () => void;
   editNodeItem: (newName: string) => void;
   isEditNode: boolean;

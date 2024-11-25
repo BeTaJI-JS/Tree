@@ -10,9 +10,9 @@ type InputNodeProps = {
 const InputNode = ({ valueInput, handleNode }: InputNodeProps) => {
   const [value, setValue] = useState(valueInput);
 
-  const onChangeInputHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onChangeInputHandler: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setValue(e.target.value);
-  };
+  }, []);
 
   const handleBlur = useCallback(() => {
     handleNode(value);
