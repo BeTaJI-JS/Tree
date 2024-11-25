@@ -95,7 +95,6 @@ export const handleAddNewItem = (
   setTreeData: (data: Node[]) => void,
   selectedNodeId: string | undefined,
   newName: string,
-  // setNewName: (name: string) => void,
   newItemType: string | null,
   setNewItemType: (type: string | null) => void,
 ) => {
@@ -113,7 +112,6 @@ export const handleAddNewItem = (
     const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
     setTreeData(selectedNodeId === 'Rootindex' ? [...treeData, newItem] : newTreeData);
 
-    // setNewName('');
     setNewItemType('');
   }
 };

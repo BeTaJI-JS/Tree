@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
@@ -15,45 +15,37 @@ const initialValuePath: string[] = ['Корень'];
 const initialValueIdPath: string[] = ['Rootindex'];
 
 const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
-  const [path, setPath] = useState<string[]>(initialValuePath);
-  const [ids, setIds] = useState<string[]>(initialValueIdPath);
-
   const setSearchParams = useSearchParams()[1];
 
-  const findPath = useCallback(
-    (
-      nodes: Node[],
-      id: string,
-      currentPath: string[] = initialValuePath,
-      currentIds: string[] = initialValueIdPath,
-    ): boolean => {
+  const findPath = useCallback((nodes: Node[], id: string): { path: string[]; ids: string[] } | null => {
+    const result: { path: string[]; ids: string[] } = { path: [], ids: [] };
+
+    const intersection = (nodes: Node[], currentPath: string[], currentIds: string[]): void => {
       for (const node of nodes) {
         const newPath = [...currentPath, node.name];
         const newIds = [...currentIds, node.id];
 
         if (node.id === id) {
-          setPath(newPath);
-          setIds(newIds);
-          return true;
+          result.path = newPath;
+          result.ids = newIds;
+          return;
         }
 
         if (node.children) {
-          const found = findPath(node.children, id, newPath, newIds);
-          if (found) return true;
+          intersection(node.children, newPath, newIds);
         }
       }
-      return false;
-    },
-    [],
-  );
+    };
 
-  useEffect(() => {
+    intersection(nodes, initialValuePath, initialValueIdPath);
+    return result.path.length > 0 ? result : null;
+  }, []);
+
+  const { path, ids } = useMemo(() => {
     if (currentId && treeData) {
-      findPath(treeData, currentId);
-    } else {
-      setPath(initialValuePath);
-      setIds(initialValueIdPath);
+      return findPath(treeData, currentId) || { path: initialValuePath, ids: initialValueIdPath };
     }
+    return { path: initialValuePath, ids: initialValueIdPath };
   }, [currentId, treeData, findPath]);
 
   const renderPath = useMemo(() => {
@@ -83,12 +75,6 @@ const BreadCrumbs = ({ treeData, currentId }: BreadCrumbsProps) => {
       );
     });
   }, [path, ids, setSearchParams]);
-
-  // useEffect(() => { старый вариант без рута
-  //   if (currentId) {
-  //     findPath(treeData, currentId);
-  //   }
-  // }, [currentId, treeData, findPath]);
 
   return <div className={styles.breadCrumbs}>{renderPath}</div>;
 };
