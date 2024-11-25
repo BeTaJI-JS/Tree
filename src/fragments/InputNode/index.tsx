@@ -1,21 +1,40 @@
+import { ChangeEventHandler, useState } from 'react';
+
 import styles from './styles.module.scss';
 
-type InputNode = {
+type InputNodeProps = {
   valueInput: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleNode: () => void;
+  handleNode: (name: string) => void;
 };
 
-const InputNode = ({ valueInput, onChange, handleNode }: InputNode) => (
-  <input
-    type='text'
-    value={valueInput}
-    onChange={onChange}
-    onBlur={handleNode}
-    onKeyDown={(e) => e.key === 'Enter' && handleNode()}
-    autoFocus
-    className={styles.inputNode}
-  />
-);
+const InputNode = ({ valueInput, handleNode }: InputNodeProps) => {
+  const [value, setValue] = useState(valueInput);
+
+  const onChangeInputHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleBlur = () => {
+    handleNode(value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleNode(value);
+    }
+  };
+
+  return (
+    <input
+      type='text'
+      value={value}
+      onChange={onChangeInputHandler}
+      onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
+      autoFocus
+      className={styles.inputNode}
+    />
+  );
+};
 
 export default InputNode;

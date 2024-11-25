@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 import cn from 'classnames';
 
@@ -22,31 +22,19 @@ const ActiveTreeNode = ({
   selectedNodeId,
   defaultExpandedNodesIds,
 }: CustomTreeNodeProps) => {
-  const [newName, setNewName] = useState('');
-
   const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, editNodeItem } = useContext(
     TreeContext,
   ) as TreeContextType;
 
-  const handleAddNewItemCallback = () => {
-    handleAddNewItem(treeData, setTreeData, selectedNodeId, newName, setNewName, newItemType, setNewItemType);
+  const handleAddNewItemCallback = (newName: string) => {
+    handleAddNewItem(treeData, setTreeData, selectedNodeId, newName, newItemType, setNewItemType);
   };
 
-  const handleEditNode = () => {
+  const handleEditNode = (newName: string) => {
     if (selectedNodeId) {
       editNodeItem(newName);
     }
   };
-
-  const onChangeInputHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setNewName(e.target.value);
-  };
-
-  useEffect(() => {
-    if (newItemType && node.id === selectedNodeId) {
-      setNewName(newItemType === 'folder' ? 'Новая папка' : 'Новый файл');
-    }
-  }, [newItemType, node.id, selectedNodeId]);
 
   return (
     <>
@@ -61,10 +49,13 @@ const ActiveTreeNode = ({
           <span className={cn(selectedNodeId === node.id && styles.activeNode)}>{node.name}</span>
         </div>
         {!!newItemType && node.id === selectedNodeId && (
-          <InputNode valueInput={newName} handleNode={handleAddNewItemCallback} onChange={onChangeInputHandler} />
+          <InputNode
+            valueInput={isEditNode ? node.name : newItemType === 'folder' ? 'Новая папка' : 'Новый файл'}
+            handleNode={isEditNode ? handleEditNode : handleAddNewItemCallback}
+          />
         )}
       </div>
-      {isEditNode && <InputNode valueInput={newName} handleNode={handleEditNode} onChange={onChangeInputHandler} />}
+      {isEditNode && <InputNode valueInput={node.name} handleNode={handleEditNode} />}
       {isOpen && node.children && (
         <div className={styles.treeChildNodeContainer}>
           {node.children

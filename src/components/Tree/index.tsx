@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
@@ -15,8 +15,6 @@ import { TreeContextType } from 'types';
 const Tree = () => {
   const { treeData, setTreeData, newItemType, setNewItemType } = useContext(TreeContext) as TreeContextType;
 
-  const [newName, setNewName] = useState('');
-
   const [searchParams] = useSearchParams();
 
   const currentNodeId = searchParams.get('id') || '';
@@ -26,8 +24,8 @@ const Tree = () => {
     [treeData, currentNodeId],
   );
 
-  const handleAddNewItemCallback = () => {
-    handleAddNewItem(treeData, setTreeData, currentNodeId, newName, setNewName, newItemType, setNewItemType);
+  const handleAddNewItemCallback = (newName: string) => {
+    handleAddNewItem(treeData, setTreeData, currentNodeId, newName, newItemType, setNewItemType);
   };
 
   return (
@@ -38,9 +36,8 @@ const Tree = () => {
       {!currentNodeId ||
         (currentNodeId === 'Rootindex' && newItemType && (
           <InputNode
-            valueInput={newName}
+            valueInput={newItemType === 'folder' ? 'Новая папка' : 'Новый файл'}
             handleNode={handleAddNewItemCallback}
-            onChange={(e) => setNewName(e.target.value)}
           />
         ))}
     </>
