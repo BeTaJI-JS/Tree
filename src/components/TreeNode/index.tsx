@@ -16,10 +16,10 @@ const TreeNode = ({ node, defaultExpandedNodesIds }: TreeNodeProps) => {
     return searchParams.get('id') || '';
   }, [searchParams]);
 
-  const toggleOpen = (e: { stopPropagation: () => void }) => {
+  const toggleOpen = useCallback((e: { stopPropagation: () => void }) => {
     e.stopPropagation();
     setIsOpen((prev) => !prev);
-  };
+  }, []);
 
   const handleSelect = useCallback(
     (selectedNode: Node) => {

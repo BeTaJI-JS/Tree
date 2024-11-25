@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { Node } from 'types';
 
-export const data: Node[] = [
+export const mockData: Node[] = [
   {
     id: nanoid(),
     name: 'КорневаяПапка1',

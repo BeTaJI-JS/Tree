@@ -6,8 +6,13 @@ export const useLocalStorage = (key: string, defaultValue?: Node[]) => {
   const [value, setValue] = useState<Node[]>(() => {
     const jsonValue = localStorage.getItem(key);
 
-    if (jsonValue !== null) return JSON.parse(jsonValue);
-    if (defaultValue) return defaultValue;
+    if (jsonValue !== null) {
+      const parsedValue = JSON.parse(jsonValue);
+      if (parsedValue.length > 0) {
+        return parsedValue;
+      }
+    }
+    return defaultValue || [];
   });
 
   useEffect(() => {

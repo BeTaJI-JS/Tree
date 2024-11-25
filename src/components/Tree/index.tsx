@@ -19,14 +19,14 @@ const Tree = () => {
 
   const currentNodeId = searchParams.get('id') || '';
 
+  const handleAddNewItemCallback = (newName: string) => {
+    handleAddNewItem(treeData, setTreeData, currentNodeId, newName, newItemType, setNewItemType);
+  };
+
   const defaultExpandedNodesIds = useMemo(
     () => getNodeIdsBreadCrumbs(treeData, currentNodeId).reduce((acc, id) => ({ ...acc, [id]: true }), {}),
     [treeData, currentNodeId],
   );
-
-  const handleAddNewItemCallback = (newName: string) => {
-    handleAddNewItem(treeData, setTreeData, currentNodeId, newName, newItemType, setNewItemType);
-  };
 
   return (
     <>

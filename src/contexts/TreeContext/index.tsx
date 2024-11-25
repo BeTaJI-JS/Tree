@@ -1,19 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { useSearchParams } from 'react-router-dom';
 
-import { loadData, saveData } from 'utils/LocalStorageHelpers';
 import { deleteNodeById, editNodeById, getNodeById } from 'utils/NodeHelpers';
 
 import { TreeContextType } from 'types';
 
-import { data } from 'data';
+import { mockData } from 'data';
 
 const TreeContext = React.createContext<TreeContextType | null>(null);
 
 const TreeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [treeData, setTreeData] = useLocalStorage('treeData', data);
+  const [treeData, setTreeData] = useLocalStorage('treeData', mockData);
   const [newItemType, setNewItemType] = useState<string | null>(null);
   const [isEditNode, setIsEditNode] = useState<boolean>(false);
 
@@ -68,22 +67,6 @@ const TreeProvider = ({ children }: { children: React.ReactNode }) => {
       setIsEditNode,
     ],
   );
-
-  // TODO useEffect для проброса моков как initialValues  в localStorage
-  useEffect(() => {
-    if (!treeData.length) {
-      saveData(data);
-      return;
-    }
-    saveData([...treeData]);
-  }, [treeData]);
-
-  useEffect(() => {
-    const storedData = loadData();
-    if (storedData.length > 0) {
-      setTreeData(storedData);
-    }
-  }, [setTreeData]);
 
   return <TreeContext.Provider value={contextValues}>{children}</TreeContext.Provider>;
 };
