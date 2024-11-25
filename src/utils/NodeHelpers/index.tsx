@@ -58,16 +58,18 @@ export const editNodeById = (treeData: Node[], nodeId: string, newName: string):
 };
 
 export const getNodeIdsBreadCrumbs = (nodes: Node[], id: string): string[] => {
-  const node = nodes.find((node) => node.id === id);
+  const stack: Node[] = [...nodes];
+  const result: string[] = [];
 
-  if (node) {
-    return [id];
-  }
+  while (stack.length) {
+    const node = stack.pop();
+    if (node?.id === id) {
+      result.push(id);
+      return result;
+    }
 
-  for (const node of nodes) {
-    const res = getNodeIdsBreadCrumbs(node?.children || [], id);
-    if (res.length) {
-      return [...res, node.id];
+    if (node?.children) {
+      stack.push(...node.children);
     }
   }
 
