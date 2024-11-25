@@ -1,4 +1,4 @@
-import { useContext, useCallback, memo } from 'react';
+import { useContext, useCallback, memo, useMemo } from 'react';
 
 import cn from 'classnames';
 
@@ -18,7 +18,6 @@ const ActiveTreeNode = memo(
     const { treeData, setTreeData, newItemType, setNewItemType, isEditNode, editNodeItem } = useContext(
       TreeContext,
     ) as TreeContextType;
-    console.log('active');
 
     const handleAddNewItemCallback = useCallback(
       (newName: string) => {
@@ -36,6 +35,11 @@ const ActiveTreeNode = memo(
       [selectedNodeId, editNodeItem],
     );
 
+    const isShowInput = useMemo(
+      () => !!isEditNode || (!!newItemType && node.id === selectedNodeId),
+      [isEditNode, newItemType, node, selectedNodeId],
+    );
+
     return (
       <>
         <div onClick={toggleOpen} className={styles.treeNodeContainer}>
@@ -50,14 +54,13 @@ const ActiveTreeNode = memo(
             )}
             <span className={cn(selectedNodeId === node.id && styles.activeNode)}>{node.name}</span>
           </div>
-          {!!newItemType && node.id === selectedNodeId && (
+          {isShowInput && (
             <InputNode
               valueInput={isEditNode ? node.name : newItemType === 'folder' ? 'Новая папка' : 'Новый файл'}
               handleNode={isEditNode ? handleEditNode : handleAddNewItemCallback}
             />
           )}
         </div>
-        {isEditNode && <InputNode valueInput={node.name} handleNode={handleEditNode} />}
         {isOpen && node.children && (
           <div className={styles.treeChildNodeContainer}>
             <ChildrenNodes
