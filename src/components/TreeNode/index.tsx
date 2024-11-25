@@ -13,7 +13,7 @@ const TreeNode = ({ node, defaultExpandedNodesIds }: TreeNodeProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentNodeId = useMemo(() => {
-    return searchParams.get('id');
+    return searchParams.get('id') || '';
   }, [searchParams]);
 
   const toggleOpen = (e: { stopPropagation: () => void }) => {
@@ -43,6 +43,7 @@ const TreeNode = ({ node, defaultExpandedNodesIds }: TreeNodeProps) => {
       onSelect={handleSelect}
       isOpen={isOpen}
       toggleOpen={toggleOpen}
+      selectedNodeId={currentNodeId}
       defaultExpandedNodesIds={defaultExpandedNodesIds}
     />
   );

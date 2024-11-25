@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, KeyboardEventHandler, useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
 
@@ -14,15 +14,18 @@ const InputNode = ({ valueInput, handleNode }: InputNodeProps) => {
     setValue(e.target.value);
   };
 
-  const handleBlur = () => {
+  const handleBlur = useCallback(() => {
     handleNode(value);
-  };
+  }, [handleNode, value]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleNode(value);
-    }
-  };
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      if (e.key === 'Enter') {
+        handleNode(value);
+      }
+    },
+    [handleNode, value],
+  );
 
   return (
     <input

@@ -1,8 +1,8 @@
 import { memo } from 'react';
 
-import { Node, TreeNodeProps } from 'types';
+import TreeNode from 'components/TreeNode';
 
-import TreeNode from '..';
+import { Node, TreeNodeProps } from 'types';
 
 type ChildrenNodesProps = Omit<TreeNodeProps, 'node'> & {
   node: Node[];
