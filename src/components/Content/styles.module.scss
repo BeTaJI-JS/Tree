@@ -16,12 +16,6 @@
     max-height: calc(100vh - 76px);
   }
 
-  &Right {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-  }
-
   & > :last-child {
     border-left: 1px solid $gray;
   }

@@ -2,9 +2,9 @@ import { TreeProvider } from 'contexts/TreeContext';
 
 import ControlPanel from 'components/ControlPanel';
 import Tree from 'components/Tree';
-import WsMessage from 'components/WsMessage';
 
 import styles from './styles.module.scss';
+
 const Content = () => (
   <TreeProvider>
     <ControlPanel />
@@ -12,9 +12,7 @@ const Content = () => (
       <div className={styles.contentContainerLeft}>
         <Tree />
       </div>
-      <div className={styles.contentContainerRight}>
-        <WsMessage />
-      </div>
+      <div />
     </div>
   </TreeProvider>
 );
