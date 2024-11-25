@@ -57,22 +57,19 @@ export const editNodeById = (treeData: Node[], nodeId: string, newName: string):
   return null;
 };
 
-export const getNodeIdsBreadCrumbs = (nodes: Node[], id: string): string[] => {
-  const stack: Node[] = [...nodes];
-  const result: string[] = [];
-
-  while (stack.length) {
-    const node = stack.pop();
-    if (node?.id === id) {
-      result.push(id);
-      return result;
+export const getNodeIdsBreadCrumbs = (nodes: Node[], id: string, path: string[] = []): string[] => {
+  for (const node of nodes) {
+    const newPath = [...path, node.id];
+    if (node.id === id) {
+      return newPath;
     }
-
-    if (node?.children) {
-      stack.push(...node.children);
+    if (node.children) {
+      const result = getNodeIdsBreadCrumbs(node.children, id, newPath);
+      if (result.length > 0) {
+        return result;
+      }
     }
   }
-
   return [];
 };
 
