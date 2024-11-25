@@ -3,16 +3,17 @@ import { nanoid } from 'nanoid';
 import { Node } from 'types';
 
 export const getNodeById = (treeData: Node[], nodeId?: string): Node | null => {
-  for (let i = 0; i < treeData.length; i++) {
-    const node = treeData[i];
-    if (node.id === nodeId) {
+  const stack: Node[] = [...treeData];
+
+  while (stack.length) {
+    const node = stack.pop();
+
+    if (node && node?.id === nodeId) {
       return node;
     }
-    if (node.children) {
-      const res: Node | null = getNodeById(node.children, nodeId);
-      if (res) {
-        return res;
-      }
+
+    if (node?.children) {
+      stack.push(...node.children);
     }
   }
 
