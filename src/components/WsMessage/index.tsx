@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Flip, toast, ToastContainer } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.min.css';
-
+import 'react-toastify/dist/ReactToastify.css';
 import styles from './styles.module.scss';
 
 type Message = {
@@ -13,53 +12,42 @@ type Message = {
 };
 
 const WsMessage = () => {
-  const websocket = useMemo(() => new WebSocket('ws://localhost:3000'), []);
-  const [message, setMessage] = useState<Message | null>(null);
-
   useEffect(() => {
+    const websocket = new WebSocket('ws://localhost:3000');
     websocket.onmessage = (e) => {
-      const newMessage = JSON.parse(e.data);
-      setMessage(newMessage);
+      const newMessage: Message = JSON.parse(e.data);
+      console.log(newMessage);
+
+      toast.info(newMessage.message, {
+        style: {
+          color: newMessage.color,
+        },
+        className: styles.toast,
+      });
     };
 
     websocket.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
-  }, [websocket]);
 
-  useEffect(() => {
-    if (message) {
-      toast.info(message.message, {
-        transition: Flip,
-        style: {
-          color: message.color,
-        },
-        className: styles.toast,
-      });
-    }
-  }, [message]);
-
-  if (!message) {
-    return null;
-  }
+    return () => {
+      setTimeout(() => websocket.close(), 3000);
+    };
+  }, []);
 
   return (
     <div className={styles.toastContainer}>
       <ToastContainer
         className={styles.toastContainerBody}
         bodyClassName={styles.toastContainerToast}
-        autoClose={78000}
-        hideProgressBar={false}
-        newestOnTop={false}
+        autoClose={6000}
         closeOnClick
-        rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
         theme='light'
         transition={Flip}
         limit={2}
-        stacked
       />
     </div>
   );
