@@ -37,3 +37,9 @@ export type TreeContextType = {
   isEditNode: boolean;
   setIsEditNode: (value: boolean | ((prevIsEditNode: boolean) => boolean)) => void;
 };
+
+export type Message = {
+  message: string;
+  time: number;
+  color: string;
+};
