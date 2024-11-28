@@ -41,10 +41,7 @@ const ActiveTreeNode = ({
     [selectedNodeId, editNodeItem],
   );
 
-  const isShowInput = useMemo(
-    () => isEditNode || (!!newItemType && node.id === selectedNodeId),
-    [isEditNode, newItemType, node, selectedNodeId],
-  );
+  const isShowInput = useMemo(() => !!newItemType && node.id === selectedNodeId, [newItemType, node, selectedNodeId]);
 
   return (
     <>
@@ -58,7 +55,11 @@ const ActiveTreeNode = ({
               <img src='/folderItem.svg' alt='Folder' />
             </>
           )}
-          <span className={cn(selectedNodeId === node.id && styles.activeNode)}>{node.name}</span>
+          {isEditNode ? (
+            <InputNode valueInput={node.name} handleNode={handleEditNode} />
+          ) : (
+            <span className={cn(selectedNodeId === node.id && styles.activeNode)}>{node.name}</span>
+          )}
         </div>
         {isShowInput && (
           <InputNode
