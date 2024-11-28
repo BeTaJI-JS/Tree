@@ -1,22 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Flip, toast, ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { Message } from 'types';
+
 import styles from './styles.module.scss';
 
-type Message = {
-  message: string;
-  time: number;
-  color: string;
-};
-
 const WsMessage = () => {
+  const websocketRef = useRef<WebSocket | null>(null);
+
   useEffect(() => {
-    const websocket = new WebSocket('ws://localhost:3000');
+    if (!websocketRef.current) {
+      websocketRef.current = new WebSocket('ws://localhost:3000');
+    }
+
+    const websocket = websocketRef.current;
     websocket.onmessage = (e) => {
       const newMessage: Message = JSON.parse(e.data);
-      console.log(newMessage);
 
       toast.info(newMessage.message, {
         style: {
@@ -31,7 +32,10 @@ const WsMessage = () => {
     };
 
     return () => {
-      setTimeout(() => websocket.close(), 3000);
+      if (websocketRef.current) {
+        setTimeout(() => websocketRef.current && websocketRef.current.close(), 3000);
+        websocketRef.current = null;
+      }
     };
   }, []);
 
