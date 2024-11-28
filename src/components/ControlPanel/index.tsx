@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { TreeContext } from 'contexts/TreeContext';
 
-import WsMessage from 'components/WsMessage';
+import NotifyContainer from 'components/NotifyContainer';
 
 import BreadCrumbs from 'fragments/BreadCrumbs';
 import ButtonsBar from 'fragments/ButtonsBar';
@@ -16,7 +16,7 @@ const ControlPanel = () => {
 
   return (
     <div className={styles.controlPanel}>
-      <WsMessage />
+      <NotifyContainer />
       <BreadCrumbs currentId={selectedNode?.id} treeData={treeData} />
       <ButtonsBar />
     </div>

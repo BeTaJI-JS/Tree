@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-import { Flip, toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
 import { Message } from 'types';
 
 import styles from './styles.module.scss';
@@ -39,22 +38,7 @@ const WsMessage = () => {
     };
   }, []);
 
-  return (
-    <div className={styles.toastContainer}>
-      <ToastContainer
-        className={styles.toastContainerBody}
-        bodyClassName={styles.toastContainerToast}
-        autoClose={6000}
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='light'
-        transition={Flip}
-        limit={2}
-      />
-    </div>
-  );
+  return null;
 };
 
 export default WsMessage;
