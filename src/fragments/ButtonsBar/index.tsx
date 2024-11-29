@@ -1,6 +1,4 @@
-import { useCallback, useContext, useMemo } from 'react';
-
-import cn from 'classnames';
+import { useCallback, useContext } from 'react';
 
 import Folder from '/folder.svg';
 import File from '/file.svg';
@@ -9,28 +7,20 @@ import Delete from '/delete.svg';
 
 import { TreeContext } from 'contexts/TreeContext';
 
-import styles from './styles.module.scss';
-
 import { TreeContextType } from 'types';
+
+import styles from './styles.module.scss';
 
 const ButtonsBar = () => {
   const { setNewItemType, selectedNode, deleteNodeItem, setIsEditNode } = useContext(TreeContext) as TreeContextType;
 
-  const isDisabledBtn = useMemo(() => selectedNode?.type === 'file', [selectedNode]);
-
   const handleAddFolder = useCallback(() => {
-    if (isDisabledBtn) {
-      return;
-    }
     setNewItemType('folder');
-  }, [setNewItemType, isDisabledBtn]);
+  }, [setNewItemType]);
 
   const handleAddFile = useCallback(() => {
-    if (isDisabledBtn) {
-      return;
-    }
     setNewItemType('file');
-  }, [setNewItemType, isDisabledBtn]);
+  }, [setNewItemType]);
 
   const handleDeleteNode = useCallback(() => {
     if (selectedNode) {
@@ -47,8 +37,8 @@ const ButtonsBar = () => {
 
   return (
     <div className={styles.buttonsBar}>
-      <img src={Folder} alt='folder' onClick={handleAddFolder} className={cn({ [styles.disableBtn]: isDisabledBtn })} />
-      <img src={File} alt='file' onClick={handleAddFile} className={cn({ [styles.disableBtn]: isDisabledBtn })} />
+      <img src={Folder} alt='folder' onClick={handleAddFolder} />
+      <img src={File} alt='file' onClick={handleAddFile} />
       <img src={Edit} alt='edit' onClick={handleEditNode} />
       <img src={Delete} alt='delete' onClick={handleDeleteNode} />
     </div>

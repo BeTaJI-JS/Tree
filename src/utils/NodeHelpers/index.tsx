@@ -73,9 +73,9 @@ export const getNodeIdsBreadCrumbs = (nodes: Node[], id: string, path: string[] 
   return [];
 };
 
-const addFolderToNode = (nodes: Node[], selectedId: string | undefined, newItem: Node): Node[] => {
+const addItemToNode = (nodes: Node[], selectedId: string | undefined, newItem: Node): Node[] => {
   return nodes.map((node) => {
-    if (node.id === selectedId && node.type !== 'file') {
+    if (node.id === selectedId) {
       return {
         ...node,
         children: [...(node.children || []), newItem],
@@ -84,11 +84,24 @@ const addFolderToNode = (nodes: Node[], selectedId: string | undefined, newItem:
     if (node.children) {
       return {
         ...node,
-        children: addFolderToNode(node.children, selectedId, newItem),
+        children: addItemToNode(node.children, selectedId, newItem),
       };
     }
     return node;
   });
+};
+
+const findParentNodeId = (nodes: Node[], childId: string): string | undefined => {
+  for (const node of nodes) {
+    if (node.children && node.children.some((child) => child.id === childId)) {
+      return node.id;
+    }
+    if (node.children) {
+      const foundParentId = findParentNodeId(node.children, childId);
+      if (foundParentId) return foundParentId;
+    }
+  }
+  return undefined;
 };
 
 export const handleAddNewItem = (
@@ -110,9 +123,20 @@ export const handleAddNewItem = (
       newItem.children = [];
     }
 
-    const newTreeData = addFolderToNode(treeData, selectedNodeId, newItem);
-    setTreeData(selectedNodeId === 'Rootindex' ? [...treeData, newItem] : newTreeData);
+    // Если выделенный элемент - файл, находим его родительскую папку
+    let parentNodeId = selectedNodeId;
 
+    if (selectedNodeId) {
+      const selectedNode = getNodeById(treeData, selectedNodeId);
+      if (selectedNode && selectedNode.type === 'file') {
+        parentNodeId = findParentNodeId(treeData, selectedNodeId); // Получаем id родительской папки
+      }
+    }
+
+    //использую parentNodeId ( по умолчанию текущий выбанный элемент ||  ищу родителя файла и подставляю id его)
+    const newTreeData = addItemToNode(treeData, parentNodeId, newItem);
+
+    setTreeData(newTreeData);
     setNewItemType('');
   }
 };
