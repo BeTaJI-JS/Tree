@@ -74,6 +74,10 @@ export const getNodeIdsBreadCrumbs = (nodes: Node[], id: string, path: string[] 
 };
 
 const addItemToNode = (nodes: Node[], selectedId: string | undefined, newItem: Node): Node[] => {
+  if (selectedId === 'Rootindex') {
+    return [...nodes, newItem];
+  }
+
   return nodes.map((node) => {
     if (node.id === selectedId) {
       return {
@@ -87,21 +91,27 @@ const addItemToNode = (nodes: Node[], selectedId: string | undefined, newItem: N
         children: addItemToNode(node.children, selectedId, newItem),
       };
     }
+
     return node;
   });
 };
 
 const findParentNodeId = (nodes: Node[], childId: string): string | undefined => {
-  for (const node of nodes) {
-    if (node.children && node.children.some((child) => child.id === childId)) {
+  const stack: Node[] = [...nodes];
+
+  while (stack.length) {
+    const node = stack.pop();
+
+    if (node && node.children && node.children.some((child) => child.id === childId)) {
       return node.id;
     }
-    if (node.children) {
-      const foundParentId = findParentNodeId(node.children, childId);
-      if (foundParentId) return foundParentId;
+
+    if (node && node.children) {
+      stack.push(...node.children);
     }
   }
-  return undefined;
+
+  return 'Rootindex';
 };
 
 export const handleAddNewItem = (
