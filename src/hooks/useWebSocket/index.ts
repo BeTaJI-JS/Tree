@@ -1,21 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { io, Socket } from 'socket.io-client';
+import { io, Socket, SocketOptions } from 'socket.io-client';
 
-const useSocket = (url: string) => {
+const useSocket = (url: string, options?: Partial<SocketOptions>) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-
   const isInitialized = useRef<boolean | null>(null);
 
   useEffect(() => {
     if (!isInitialized.current) {
       const newSocket = io(url, {
         autoConnect: true,
-        // ...options,
+        ...options,
       });
 
       setSocket(newSocket);
-
       isInitialized.current = true;
 
       return () => {
@@ -23,8 +21,7 @@ const useSocket = (url: string) => {
         isInitialized.current = null;
       };
     }
-  }, [url]);
-  console.log('socket', socket);
+  }, [url, options]);
 
   return { socket };
 };
