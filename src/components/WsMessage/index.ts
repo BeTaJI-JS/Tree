@@ -1,30 +1,25 @@
 import { useEffect } from 'react';
 
-import useWebSocket from 'hooks/useWebsocket';
+import useSocket from 'hooks/useWebSocket';
 import { toast } from 'react-toastify';
-
-import { Message } from 'types';
 
 import styles from './styles.module.scss';
 
 const WsMessage = () => {
-  const { messages, error } = useWebSocket('ws://localhost:3000');
+  const { socket } = useSocket('ws://localhost:3000');
 
   useEffect(() => {
-    if (messages.length > 0) {
-      const lastMessage: Message = messages[messages.length - 1];
-      toast.info(lastMessage.message, {
-        style: {
-          color: lastMessage.color,
-        },
-        className: styles.toast,
+    if (socket) {
+      socket.on('message', (message) => {
+        toast.info(message.message, {
+          style: {
+            color: message.color,
+          },
+          className: styles.toast,
+        });
       });
     }
-
-    if (error) {
-      console.error('WebSocket error:', error);
-    }
-  }, [messages, error]);
+  }, [socket]);
 
   return null;
 };
